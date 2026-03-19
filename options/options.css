@@ -522,6 +522,132 @@ h1 {
   color: var(--ink-light);
 }
 
+/* ── Select / Input / Textarea controls ── */
+
+/* select rows: 最終カラムを広めに */
+.setting-row.setting-row-ctrl {
+  grid-template-columns: minmax(160px, 1.1fr) minmax(0, 1.6fr) minmax(150px, auto);
+}
+
+.setting-select {
+  padding: 6px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  min-width: 160px;
+  transition: border-color 0.12s ease;
+}
+
+.setting-select:hover {
+  border-color: var(--ink);
+}
+
+.setting-select:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--red) 40%, transparent);
+  outline-offset: 2px;
+  border-color: var(--red);
+}
+
+.setting-input-number {
+  width: 84px;
+  padding: 6px 8px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  text-align: center;
+  transition: border-color 0.12s ease;
+}
+
+.setting-input-number:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--red) 40%, transparent);
+  outline-offset: 2px;
+  border-color: var(--red);
+}
+
+.setting-input-text {
+  width: 100%;
+  max-width: 360px;
+  padding: 6px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-size: 13px;
+  transition: border-color 0.12s ease;
+}
+
+.setting-input-text:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--red) 40%, transparent);
+  outline-offset: 2px;
+  border-color: var(--red);
+}
+
+.setting-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.65;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.12s ease;
+}
+
+.setting-textarea:focus-visible {
+  outline: 2px solid color-mix(in oklch, var(--red) 40%, transparent);
+  outline-offset: 2px;
+  border-color: var(--red);
+}
+
+/* フルワイド行（テキスト入力・textarea 用） */
+.setting-row-full {
+  padding: 12px 20px;
+  display: grid;
+  gap: 7px;
+  border-top: 1px solid var(--rule);
+}
+
+.setting-row-full .setting-name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.setting-row-full .setting-desc {
+  color: var(--ink-mid);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* セクション内の区切り見出し */
+.setting-group-head {
+  padding: 10px 20px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  border-top: 1px solid var(--rule);
+  background: var(--cream);
+}
+
+/* preview-row の 2 列レイアウト（ファイル名プレビューはコントロール列不要）*/
+.preview-row {
+  grid-template-columns: minmax(180px, 1fr) minmax(0, 3fr);
+}
+
 /* ── Responsive ────────────────────────── */
 
 @media (max-width: 980px) {

@@ -4,15 +4,30 @@
  */
 
 const DEFAULT_SETTINGS = {
-  removeAds:          false,
-  removeHeader:       false,
-  removeFooter:       false,
-  removeNav:          false,
-  removeSidebar:      false,
-  frontmatterEnabled: true,
-  frontmatterTitle:   true,
-  frontmatterUrl:     true,
-  frontmatterDate:    true,
+  removeAds:               false,
+  removeHeader:            false,
+  removeFooter:            false,
+  removeNav:               false,
+  removeSidebar:           false,
+  imageHandling:           'keep',
+  linkHandling:            'keep',
+  collapseBlankLines:      false,
+  headingShift:            0,
+  extractionMode:          'readability',
+  selectionOnly:           false,
+  frontmatterEnabled:      true,
+  frontmatterTitle:        true,
+  frontmatterUrl:          true,
+  frontmatterDate:         true,
+  frontmatterDescription:  false,
+  frontmatterAuthor:       false,
+  frontmatterTags:         false,
+  frontmatterTagsValue:    '',
+  frontmatterCustom:       '',
+  filenameDateFormat:      'YYYY-MM-DD',
+  filenameSeparator:       '_',
+  filenameTitleMaxLength:  50,
+  autoCopy:                false,
 };
 
 /**
@@ -90,6 +105,7 @@ function buildFrontmatter(settings) {
   if (!settings.frontmatterEnabled) return '';
 
   const lines = ['---'];
+
   if (settings.frontmatterTitle) {
     const title = document.title.replace(/"/g, "'");
     lines.push(`title: "${title}"`);
@@ -98,9 +114,40 @@ function buildFrontmatter(settings) {
     lines.push(`url: ${location.href}`);
   }
   if (settings.frontmatterDate) {
-    const today = new Date().toISOString().split('T')[0];
-    lines.push(`date: ${today}`);
+    lines.push(`date: ${new Date().toISOString().split('T')[0]}`);
   }
+  if (settings.frontmatterDescription) {
+    const el =
+      document.querySelector('meta[name="description"]') ||
+      document.querySelector('meta[property="og:description"]');
+    const desc = (el ? el.getAttribute('content') || '' : '').replace(/"/g, "'").trim();
+    if (desc) lines.push(`description: "${desc}"`);
+  }
+  if (settings.frontmatterAuthor) {
+    const el =
+      document.querySelector('meta[name="author"]') ||
+      document.querySelector('meta[property="article:author"]') ||
+      document.querySelector('meta[name="twitter:creator"]');
+    const author = (el ? el.getAttribute('content') || '' : '').replace(/"/g, "'").trim();
+    if (author) lines.push(`author: "${author}"`);
+  }
+  if (settings.frontmatterTags && settings.frontmatterTagsValue) {
+    const tags = settings.frontmatterTagsValue
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
+    if (tags.length > 0) {
+      lines.push(`tags: [${tags.map((t) => `"${t}"`).join(', ')}]`);
+    }
+  }
+  if (settings.frontmatterCustom) {
+    const customLines = settings.frontmatterCustom
+      .split('\n')
+      .map((l) => l.trim())
+      .filter(Boolean);
+    lines.push(...customLines);
+  }
+
   lines.push('---');
   return lines.join('\n');
 }
@@ -115,35 +162,92 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
   const settings = Object.assign({}, DEFAULT_SETTINGS, request.settings);
 
   try {
-    // DOMクローン（Readabilityはparseでクローンを破壊するため必須）
-    const documentClone = document.cloneNode(true);
+    let contentHtml = null;
+    let pageTitle = document.title;
 
-    // 不要要素をクローン側から除去
-    removeUnwantedElements(documentClone, settings);
+    // 選択範囲モード: 選択があればそれを優先して使う
+    if (settings.selectionOnly) {
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+        const range = sel.getRangeAt(0);
+        const fragment = range.cloneContents();
+        const div = document.createElement('div');
+        div.appendChild(fragment);
+        contentHtml = div.innerHTML;
+      }
+    }
 
-    // Readabilityで本文抽出
-    const reader = new Readability(documentClone);
-    const article = reader.parse();
+    // 通常抽出（selectionOnly 未適用の場合）
+    if (contentHtml === null) {
+      const documentClone = document.cloneNode(true);
+      removeUnwantedElements(documentClone, settings);
 
-    // Readability失敗時はdocument.bodyをフォールバック
-    const contentHtml = article ? article.content : document.body.innerHTML;
-    const pageTitle = (article && article.title) ? article.title : document.title;
+      if (settings.extractionMode === 'body') {
+        contentHtml = documentClone.body.innerHTML;
+      } else {
+        const reader = new Readability(documentClone);
+        const article = reader.parse();
+        contentHtml = article ? article.content : documentClone.body.innerHTML;
+        if (article && article.title) pageTitle = article.title;
+      }
+    }
 
     // TurndownService 初期化
     const turndownService = new TurndownService({
-      headingStyle: 'atx',
-      codeBlockStyle: 'fenced',
-      fence: '```',
+      headingStyle:     'atx',
+      codeBlockStyle:   'fenced',
+      fence:            '```',
       bulletListMarker: '-',
-      emDelimiter: '*',
-      strongDelimiter: '**',
+      emDelimiter:      '*',
+      strongDelimiter:  '**',
     });
 
     // GFMプラグイン適用（テーブル・strikethrough等）
     turndownService.use(turndownPluginGfm.gfm);
 
-    // Markdown変換
+    // ── カスタムルール（GFM適用後に追加して優先） ──────────────
+
+    // 画像の扱い
+    if (settings.imageHandling === 'altOnly') {
+      turndownService.addRule('imageAltOnly', {
+        filter: 'img',
+        replacement: (_content, node) => node.getAttribute('alt') || '',
+      });
+    } else if (settings.imageHandling === 'remove') {
+      turndownService.addRule('imageRemove', {
+        filter: 'img',
+        replacement: () => '',
+      });
+    }
+
+    // リンクの扱い
+    if (settings.linkHandling === 'textOnly') {
+      turndownService.addRule('linkTextOnly', {
+        filter: 'a',
+        replacement: (content) => content,
+      });
+    }
+
+    // 見出しレベルのシフト
+    const headingShift = parseInt(settings.headingShift) || 0;
+    if (headingShift > 0) {
+      turndownService.addRule('headingShift', {
+        filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+        replacement: (content, node) => {
+          const level = Math.min(parseInt(node.nodeName[1]) + headingShift, 6);
+          return '\n\n' + '#'.repeat(level) + ' ' + content.trim() + '\n\n';
+        },
+      });
+    }
+
+    // ──────────────────────────────────────────────────────────
+
     let markdown = turndownService.turndown(contentHtml);
+
+    // 空行の圧縮
+    if (settings.collapseBlankLines) {
+      markdown = markdown.replace(/\n{3,}/g, '\n\n');
+    }
 
     // フロントマター付加
     const frontmatter = buildFrontmatter(settings);

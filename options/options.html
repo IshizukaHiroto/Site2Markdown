@@ -19,53 +19,95 @@
           <h1>設定</h1>
         </div>
       </div>
+      <div class="topbar-meta">
+        <p class="topbar-path">Chrome Extension / Preferences</p>
+        <p class="topbar-help">本文の整形・出力形式・フロントマター・ファイル名のルールをまとめて管理します。</p>
+      </div>
     </header>
 
     <div class="workspace">
       <aside class="sidebar">
-        <nav class="side-nav" aria-label="設定カテゴリ" role="tablist">
-          <button
-            id="tab-cleanup"
-            class="side-link is-active"
-            type="button"
-            role="tab"
-            aria-selected="true"
-            aria-controls="cleanupSection"
-            data-target="cleanupSection"
-          >
-            本文の整え方
-          </button>
-          <button
-            id="tab-frontmatter"
-            class="side-link"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="frontmatterSection"
-            data-target="frontmatterSection"
-          >
-            メタ情報
-          </button>
-          <button
-            id="tab-preview"
-            class="side-link"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="previewSection"
-            data-target="previewSection"
-          >
-            出力例
-          </button>
-        </nav>
+        <section class="sidebar-block">
+          <p class="sidebar-heading">カテゴリ</p>
+          <nav class="side-nav" aria-label="設定カテゴリ" role="tablist">
+            <button id="tab-cleanup" class="side-link is-active" type="button"
+              role="tab" aria-selected="true" aria-controls="cleanupSection" data-target="cleanupSection">
+              本文の整え方
+            </button>
+            <button id="tab-output" class="side-link" type="button"
+              role="tab" aria-selected="false" aria-controls="outputSection" data-target="outputSection">
+              出力形式
+            </button>
+            <button id="tab-frontmatter" class="side-link" type="button"
+              role="tab" aria-selected="false" aria-controls="frontmatterSection" data-target="frontmatterSection">
+              メタ情報
+            </button>
+            <button id="tab-filename" class="side-link" type="button"
+              role="tab" aria-selected="false" aria-controls="filenameSection" data-target="filenameSection">
+              ファイル名・動作
+            </button>
+            <button id="tab-preview" class="side-link" type="button"
+              role="tab" aria-selected="false" aria-controls="previewSection" data-target="previewSection">
+              出力例
+            </button>
+          </nav>
+        </section>
+
+        <section class="sidebar-block">
+          <p class="sidebar-heading">この画面でできること</p>
+          <ul class="sidebar-list">
+            <li>抽出モードと不要要素の除去</li>
+            <li>画像・リンク・見出しの変換形式</li>
+            <li>フロントマターの ON/OFF と項目選択</li>
+            <li>ファイル名フォーマットと自動動作</li>
+          </ul>
+        </section>
       </aside>
 
       <main class="content">
+
+        <!-- ────────────────────────────────────────
+             Tab 1: 本文の整え方
+        ──────────────────────────────────────── -->
         <section id="cleanupSection" class="panel is-active" role="tabpanel" aria-labelledby="tab-cleanup">
           <div class="panel-header">
-            <h2>本文の整え方</h2>
+            <div>
+              <p class="panel-kicker">本文整理</p>
+              <h2>本文の整え方</h2>
+            </div>
+            <p class="panel-desc">コンテンツの取得方法と、変換前に除去する要素を設定します。</p>
           </div>
 
+          <!-- 抽出方法 -->
+          <div class="setting-table" role="presentation">
+            <div class="table-head" aria-hidden="true">
+              <span>項目</span>
+              <span>説明</span>
+              <span class="table-head-state">設定</span>
+            </div>
+
+            <label class="setting-row setting-row-ctrl">
+              <span class="setting-name">コンテンツ抽出</span>
+              <span class="setting-desc">Readability は記事向けの自動本文抽出、body はページ全体を変換します。</span>
+              <span class="setting-control">
+                <select class="setting-select" id="extractionMode">
+                  <option value="readability">Readability（推奨）</option>
+                  <option value="body">ページ全体（body）</option>
+                </select>
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-name">選択範囲のみ変換</span>
+              <span class="setting-desc">テキストを選択した状態でポップアップを開くと、選択部分だけを Markdown に変換します。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="selectionOnly">
+              </span>
+            </label>
+          </div>
+
+          <!-- 除去オプション -->
+          <div class="setting-group-head">除去オプション</div>
           <div class="setting-table" role="presentation">
             <div class="table-head" aria-hidden="true">
               <span>項目</span>
@@ -115,9 +157,80 @@
           </div>
         </section>
 
+        <!-- ────────────────────────────────────────
+             Tab 2: 出力形式
+        ──────────────────────────────────────── -->
+        <section id="outputSection" class="panel" role="tabpanel" aria-labelledby="tab-output" hidden>
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Output</p>
+              <h2>Markdown の出力形式</h2>
+            </div>
+            <p class="panel-desc">変換後の Markdown の構造・見た目を細かく調整します。</p>
+          </div>
+
+          <div class="setting-table" role="presentation">
+            <div class="table-head" aria-hidden="true">
+              <span>項目</span>
+              <span>説明</span>
+              <span class="table-head-state">設定</span>
+            </div>
+
+            <label class="setting-row setting-row-ctrl">
+              <span class="setting-name">画像の扱い</span>
+              <span class="setting-desc">画像をそのまま保持するか、alt テキストのみにするか、完全に除去するかを選びます。AI への入力用途では「alt のみ」か「除去」が効果的です。</span>
+              <span class="setting-control">
+                <select class="setting-select" id="imageHandling">
+                  <option value="keep">そのまま保持</option>
+                  <option value="altOnly">alt テキストのみ</option>
+                  <option value="remove">完全に除去</option>
+                </select>
+              </span>
+            </label>
+
+            <label class="setting-row setting-row-ctrl">
+              <span class="setting-name">リンクの扱い</span>
+              <span class="setting-desc">リンクを Markdown 形式（[text](url)）で保持するか、テキストのみにして URL を除去するかを選びます。</span>
+              <span class="setting-control">
+                <select class="setting-select" id="linkHandling">
+                  <option value="keep">リンクを保持</option>
+                  <option value="textOnly">テキストのみ（URL 除去）</option>
+                </select>
+              </span>
+            </label>
+
+            <label class="setting-row setting-row-ctrl">
+              <span class="setting-name">見出しレベルのシフト</span>
+              <span class="setting-desc">見出しのレベルを下げます。他の文書に貼り付ける際、h1 が重複しないようにするのに便利です。</span>
+              <span class="setting-control">
+                <select class="setting-select" id="headingShift">
+                  <option value="0">シフトなし</option>
+                  <option value="1">1 段下げる（h1 → h2）</option>
+                  <option value="2">2 段下げる（h1 → h3）</option>
+                </select>
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-name">空行を圧縮</span>
+              <span class="setting-desc">3 行以上連続する空行を 2 行にまとめます。出力がすっきりし、AI への入力トークンを節約できます。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="collapseBlankLines">
+              </span>
+            </label>
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────────────
+             Tab 3: メタ情報
+        ──────────────────────────────────────── -->
         <section id="frontmatterSection" class="panel" role="tabpanel" aria-labelledby="tab-frontmatter" hidden>
           <div class="panel-header">
-            <h2>メタ情報</h2>
+            <div>
+              <p class="panel-kicker">Frontmatter</p>
+              <h2>メタ情報</h2>
+            </div>
+            <p class="panel-desc">ファイル先頭に付与する YAML フロントマターの内容を設定します。</p>
           </div>
 
           <div class="setting-table" role="presentation">
@@ -136,11 +249,12 @@
             </label>
           </div>
 
-          <p id="frontmatterHint" class="panel-hint" hidden>ON にすると項目を選べます。</p>
+          <p id="frontmatterHint" class="panel-hint" hidden>フロントマターを ON にすると、含める項目を下の表から選べます。</p>
 
           <div id="frontmatterFields" class="sub-panel">
             <div class="sub-panel-header">
-              <p class="sub-panel-title">含める項目</p>
+              <p class="sub-panel-title">frontmatter に含める項目</p>
+              <p class="sub-panel-desc">必要な項目だけを残したすっきりした YAML を出力できます。</p>
             </div>
 
             <div class="setting-table setting-table-sub" role="presentation">
@@ -182,28 +296,169 @@
                   <input class="setting-checkbox" type="checkbox" id="frontmatterDate">
                 </span>
               </label>
+
+              <label class="setting-row">
+                <span class="setting-name">
+                  概要
+                  <code class="setting-token">description</code>
+                </span>
+                <span class="setting-desc">ページの meta description または og:description を取得して付与します。</span>
+                <span class="setting-control">
+                  <input class="setting-checkbox" type="checkbox" id="frontmatterDescription">
+                </span>
+              </label>
+
+              <label class="setting-row">
+                <span class="setting-name">
+                  著者
+                  <code class="setting-token">author</code>
+                </span>
+                <span class="setting-desc">meta author タグから著者名を取得して付与します。</span>
+                <span class="setting-control">
+                  <input class="setting-checkbox" type="checkbox" id="frontmatterAuthor">
+                </span>
+              </label>
+
+              <label class="setting-row">
+                <span class="setting-name">
+                  タグ
+                  <code class="setting-token">tags</code>
+                </span>
+                <span class="setting-desc">すべての変換に付与する固定タグを設定します。Obsidian などのノートツールで便利です。</span>
+                <span class="setting-control">
+                  <input class="setting-checkbox" type="checkbox" id="frontmatterTags">
+                </span>
+              </label>
+            </div>
+
+            <!-- タグ入力欄（frontmatterTags ON のときのみ表示） -->
+            <div class="setting-row-full" id="tagsValueRow" hidden>
+              <label class="setting-name" for="frontmatterTagsValue">タグの値（カンマ区切り）</label>
+              <span class="setting-desc">付与するタグをカンマで区切って入力してください。</span>
+              <input class="setting-input-text" type="text" id="frontmatterTagsValue"
+                     placeholder="AI, research, notes">
+            </div>
+
+            <!-- カスタムフィールド -->
+            <div class="setting-row-full">
+              <label class="setting-name" for="frontmatterCustom">カスタムフィールド</label>
+              <span class="setting-desc">YAML 形式で追記したい行を入力してください。複数行可。</span>
+              <textarea class="setting-textarea" id="frontmatterCustom" rows="3"
+                        placeholder="source: 参照先名&#10;status: draft&#10;lang: ja"></textarea>
             </div>
           </div>
         </section>
 
+        <!-- ────────────────────────────────────────
+             Tab 4: ファイル名・動作
+        ──────────────────────────────────────── -->
+        <section id="filenameSection" class="panel" role="tabpanel" aria-labelledby="tab-filename" hidden>
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">File &amp; Behavior</p>
+              <h2>ファイル名・動作</h2>
+            </div>
+            <p class="panel-desc">保存ファイル名のフォーマットと、ポップアップを開いたときの自動動作を設定します。</p>
+          </div>
+
+          <!-- ファイル名フォーマット -->
+          <div class="sub-panel" style="margin: 16px 20px 0">
+            <div class="sub-panel-header">
+              <p class="sub-panel-title">ファイル名のフォーマット</p>
+              <p class="sub-panel-desc">「保存」ボタンで出力する .md ファイルの名前を設定します。</p>
+            </div>
+            <div class="setting-table" role="presentation">
+              <div class="table-head" aria-hidden="true">
+                <span>項目</span>
+                <span>説明</span>
+                <span class="table-head-state">設定</span>
+              </div>
+
+              <label class="setting-row setting-row-ctrl">
+                <span class="setting-name">日付フォーマット</span>
+                <span class="setting-desc">ファイル名先頭に付与する日付の形式を選びます。</span>
+                <span class="setting-control">
+                  <select class="setting-select" id="filenameDateFormat">
+                    <option value="YYYY-MM-DD">YYYY-MM-DD（例: 2026-03-19）</option>
+                    <option value="YYYYMMDD">YYYYMMDD（例: 20260319）</option>
+                    <option value="none">なし</option>
+                  </select>
+                </span>
+              </label>
+
+              <label class="setting-row setting-row-ctrl">
+                <span class="setting-name">区切り文字</span>
+                <span class="setting-desc">日付とタイトルの間の区切り文字を選びます。</span>
+                <span class="setting-control">
+                  <select class="setting-select" id="filenameSeparator">
+                    <option value="_">アンダースコア（_）</option>
+                    <option value="-">ハイフン（-）</option>
+                  </select>
+                </span>
+              </label>
+
+              <label class="setting-row setting-row-ctrl">
+                <span class="setting-name">タイトル最大文字数</span>
+                <span class="setting-desc">ファイル名に使うタイトルの最大文字数を指定します（10〜200）。</span>
+                <span class="setting-control">
+                  <input class="setting-input-number" type="number" id="filenameTitleMaxLength"
+                         min="10" max="200" step="5">
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 動作設定 -->
+          <div class="sub-panel" style="margin: 16px 20px 18px">
+            <div class="sub-panel-header">
+              <p class="sub-panel-title">ポップアップの動作</p>
+              <p class="sub-panel-desc">ポップアップを開いたときの自動動作を設定します。</p>
+            </div>
+            <div class="setting-table" role="presentation">
+              <div class="table-head" aria-hidden="true">
+                <span>項目</span>
+                <span>説明</span>
+                <span class="table-head-state">使用</span>
+              </div>
+
+              <label class="setting-row">
+                <span class="setting-name">自動コピー</span>
+                <span class="setting-desc">ポップアップを開いたとき、変換完了と同時に Markdown を自動的にクリップボードにコピーします。</span>
+                <span class="setting-control">
+                  <input class="setting-checkbox" type="checkbox" id="autoCopy">
+                </span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────────────
+             Tab 5: 出力例
+        ──────────────────────────────────────── -->
         <section id="previewSection" class="panel" role="tabpanel" aria-labelledby="tab-preview" hidden>
           <div class="panel-header">
-            <h2>出力例</h2>
+            <div>
+              <p class="panel-kicker">Preview</p>
+              <h2>現在の出力例</h2>
+            </div>
+            <p class="panel-desc">現在の設定で生成されるファイル名のプレビューです。設定を変更すると即時反映されます。</p>
           </div>
 
           <div class="preview-table" role="presentation">
             <div class="preview-row">
               <span class="preview-label">保存されるファイル名</span>
-              <code class="preview-code">YYYY-MM-DD_<span id="titlePreview">ページタイトル</span>.md</code>
+              <code class="preview-code" id="filenamePreview">YYYY-MM-DD_ページタイトル（最大50文字）.md</code>
             </div>
           </div>
         </section>
+
       </main>
     </div>
 
     <footer class="footer-bar">
       <div class="footer-copy">
         <span id="saveStatus" class="save-status" data-state="saved" aria-live="polite">保存済み</span>
+        <p class="footer-note">設定の変更はこのブラウザに保存され、次回の変換にも引き継がれます。</p>
       </div>
       <button id="saveBtn" class="btn-save" disabled>変更を保存</button>
     </footer>

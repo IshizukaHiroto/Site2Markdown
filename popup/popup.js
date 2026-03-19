@@ -3,15 +3,30 @@
  */
 
 const DEFAULT_SETTINGS = {
-  removeAds:          false,
-  removeHeader:       false,
-  removeFooter:       false,
-  removeNav:          false,
-  removeSidebar:      false,
-  frontmatterEnabled: true,
-  frontmatterTitle:   true,
-  frontmatterUrl:     true,
-  frontmatterDate:    true,
+  removeAds:               false,
+  removeHeader:            false,
+  removeFooter:            false,
+  removeNav:               false,
+  removeSidebar:           false,
+  imageHandling:           'keep',
+  linkHandling:            'keep',
+  collapseBlankLines:      false,
+  headingShift:            0,
+  extractionMode:          'readability',
+  selectionOnly:           false,
+  frontmatterEnabled:      true,
+  frontmatterTitle:        true,
+  frontmatterUrl:          true,
+  frontmatterDate:         true,
+  frontmatterDescription:  false,
+  frontmatterAuthor:       false,
+  frontmatterTags:         false,
+  frontmatterTagsValue:    '',
+  frontmatterCustom:       '',
+  filenameDateFormat:      'YYYY-MM-DD',
+  filenameSeparator:       '_',
+  filenameTitleMaxLength:  50,
+  autoCopy:                false,
 };
 
 let currentTitle = 'untitled';
@@ -43,7 +58,6 @@ function setPageInfo(tab) {
     document.getElementById('page-url').textContent = tab.url || '';
   }
 
-  // ファビコン（DOM操作で安全に挿入）
   if (tab.favIconUrl) {
     const faviconContainer = document.getElementById('page-favicon');
     const img = document.createElement('img');
@@ -114,14 +128,27 @@ async function requestConversion(tabId, settings) {
   });
 }
 
-function buildFilename(title) {
-  const date = new Date().toISOString().split('T')[0];
+/**
+ * 設定に基づいてファイル名を生成する
+ */
+function buildFilename(title, settings) {
+  const sep = settings.filenameSeparator || '_';
+  const maxLen = Number(settings.filenameTitleMaxLength) || 50;
+
   const safeName = title
     .replace(/[\\/:*?"<>|]/g, '_')
-    .replace(/\s+/g, '_')
-    .slice(0, 50)
-    .replace(/_+$/, '') || 'untitled';
-  return `${date}_${safeName}.md`;
+    .replace(/\s+/g, sep)
+    .slice(0, maxLen)
+    .replace(new RegExp(`[_\\-]+$`), '') || 'untitled';
+
+  const fmt = settings.filenameDateFormat;
+  if (!fmt || fmt === 'none') {
+    return `${safeName}.md`;
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  const datePart = fmt === 'YYYYMMDD' ? today.replace(/-/g, '') : today;
+  return `${datePart}${sep}${safeName}.md`;
 }
 
 /** プロパティセクションの折りたたみ */
@@ -164,6 +191,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('markdownOutput').value = response.markdown;
   setButtonsEnabled(true);
 
+  // 自動コピー
+  if (settings.autoCopy) {
+    try {
+      await navigator.clipboard.writeText(response.markdown);
+      showStatus('自動コピーしました ✓');
+    } catch {
+      // サイレントに失敗
+    }
+  }
+
   // コピー
   document.getElementById('copyBtn').addEventListener('click', async () => {
     const text = document.getElementById('markdownOutput').value;
@@ -178,7 +215,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 保存
   document.getElementById('saveBtn').addEventListener('click', () => {
     const text = document.getElementById('markdownOutput').value;
-    const filename = buildFilename(currentTitle);
+    const filename = buildFilename(currentTitle, settings);
 
     if (downloadUrl) URL.revokeObjectURL(downloadUrl);
     const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
