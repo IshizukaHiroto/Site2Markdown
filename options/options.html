@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site2Markdown - 設定</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div id="container">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <span class="brand-badge">S2M</span>
+        <div class="topbar-copy">
+          <p class="topbar-label">Site2Markdown</p>
+          <h1>設定</h1>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <nav class="side-nav" aria-label="設定カテゴリ" role="tablist">
+          <button
+            id="tab-cleanup"
+            class="side-link is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="cleanupSection"
+            data-target="cleanupSection"
+          >
+            本文の整え方
+          </button>
+          <button
+            id="tab-frontmatter"
+            class="side-link"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="frontmatterSection"
+            data-target="frontmatterSection"
+          >
+            メタ情報
+          </button>
+          <button
+            id="tab-preview"
+            class="side-link"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="previewSection"
+            data-target="previewSection"
+          >
+            出力例
+          </button>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <section id="cleanupSection" class="panel is-active" role="tabpanel" aria-labelledby="tab-cleanup">
+          <div class="panel-header">
+            <h2>本文の整え方</h2>
+          </div>
+
+          <div class="setting-table" role="presentation">
+            <div class="table-head" aria-hidden="true">
+              <span>項目</span>
+              <span>説明</span>
+              <span class="table-head-state">使用</span>
+            </div>
+
+            <label class="setting-row">
+              <span class="setting-name">広告を除去</span>
+              <span class="setting-desc">記事の流れを遮る広告ブロックを Markdown 出力から外します。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="removeAds">
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-name">ヘッダーを除去</span>
+              <span class="setting-desc">サイトのロゴや上部ナビゲーションを本文領域から切り離します。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="removeHeader">
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-name">フッターを除去</span>
+              <span class="setting-desc">関連記事や著作権表記など、末尾の補助情報を出力から除きます。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="removeFooter">
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-name">ナビゲーションバーを除去</span>
+              <span class="setting-desc">メニューやパンくずなど、移動用に使う要素を変換対象から外します。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="removeNav">
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-name">サイドバーを除去</span>
+              <span class="setting-desc">関連リンクやウィジェットなど、本文の脇にある補助カラムを取り除きます。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="removeSidebar">
+              </span>
+            </label>
+          </div>
+        </section>
+
+        <section id="frontmatterSection" class="panel" role="tabpanel" aria-labelledby="tab-frontmatter" hidden>
+          <div class="panel-header">
+            <h2>メタ情報</h2>
+          </div>
+
+          <div class="setting-table" role="presentation">
+            <div class="table-head" aria-hidden="true">
+              <span>項目</span>
+              <span>説明</span>
+              <span class="table-head-state">使用</span>
+            </div>
+
+            <label class="setting-row">
+              <span class="setting-name">フロントマターを付与する</span>
+              <span class="setting-desc">あとから整理しやすいように、ページ情報を YAML で先頭に追加します。</span>
+              <span class="setting-control">
+                <input class="setting-checkbox" type="checkbox" id="frontmatterEnabled">
+              </span>
+            </label>
+          </div>
+
+          <p id="frontmatterHint" class="panel-hint" hidden>ON にすると項目を選べます。</p>
+
+          <div id="frontmatterFields" class="sub-panel">
+            <div class="sub-panel-header">
+              <p class="sub-panel-title">含める項目</p>
+            </div>
+
+            <div class="setting-table setting-table-sub" role="presentation">
+              <div class="table-head" aria-hidden="true">
+                <span>項目</span>
+                <span>説明</span>
+                <span class="table-head-state">使用</span>
+              </div>
+
+              <label class="setting-row">
+                <span class="setting-name">
+                  タイトル
+                  <code class="setting-token">title</code>
+                </span>
+                <span class="setting-desc">ページタイトルを frontmatter に含めます。</span>
+                <span class="setting-control">
+                  <input class="setting-checkbox" type="checkbox" id="frontmatterTitle">
+                </span>
+              </label>
+
+              <label class="setting-row">
+                <span class="setting-name">
+                  URL
+                  <code class="setting-token">url</code>
+                </span>
+                <span class="setting-desc">変換元ページの URL を記録します。</span>
+                <span class="setting-control">
+                  <input class="setting-checkbox" type="checkbox" id="frontmatterUrl">
+                </span>
+              </label>
+
+              <label class="setting-row">
+                <span class="setting-name">
+                  日付
+                  <code class="setting-token">date</code>
+                </span>
+                <span class="setting-desc">保存した日付を frontmatter に書き込みます。</span>
+                <span class="setting-control">
+                  <input class="setting-checkbox" type="checkbox" id="frontmatterDate">
+                </span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section id="previewSection" class="panel" role="tabpanel" aria-labelledby="tab-preview" hidden>
+          <div class="panel-header">
+            <h2>出力例</h2>
+          </div>
+
+          <div class="preview-table" role="presentation">
+            <div class="preview-row">
+              <span class="preview-label">保存されるファイル名</span>
+              <code class="preview-code">YYYY-MM-DD_<span id="titlePreview">ページタイトル</span>.md</code>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer-bar">
+      <div class="footer-copy">
+        <span id="saveStatus" class="save-status" data-state="saved" aria-live="polite">保存済み</span>
+      </div>
+      <button id="saveBtn" class="btn-save" disabled>変更を保存</button>
+    </footer>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
