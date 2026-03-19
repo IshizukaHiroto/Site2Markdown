@@ -53,8 +53,13 @@ function setPageInfo(tab) {
   document.getElementById('page-title').textContent = tab.title || '(無題)';
   try {
     const url = new URL(tab.url);
-    document.getElementById('page-url').textContent = url.hostname + url.pathname;
+    const domainEl = document.getElementById('page-domain');
+    if (domainEl) domainEl.textContent = url.hostname;
+    document.getElementById('page-url').textContent =
+      url.pathname !== '/' ? url.pathname : '';
   } catch {
+    const domainEl = document.getElementById('page-domain');
+    if (domainEl) domainEl.textContent = '';
     document.getElementById('page-url').textContent = tab.url || '';
   }
 
@@ -63,8 +68,8 @@ function setPageInfo(tab) {
     const img = document.createElement('img');
     img.src = tab.favIconUrl;
     img.alt = '';
-    img.width = 16;
-    img.height = 16;
+    img.width = 14;
+    img.height = 14;
     faviconContainer.replaceChildren(img);
   }
 }
@@ -179,7 +184,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   setPropertyValues(tab);
   applyPropertyVisibility(settings);
 
+  const contentWrapper = document.getElementById('content-wrapper');
+  contentWrapper.classList.add('is-loading');
+
   const response = await requestConversion(tab.id, settings);
+  contentWrapper.classList.remove('is-loading');
 
   if (response.error) {
     document.getElementById('markdownOutput').placeholder = response.error;

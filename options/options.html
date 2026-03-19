@@ -21,7 +21,7 @@
       </div>
       <div class="topbar-meta">
         <p class="topbar-path">Chrome Extension / Preferences</p>
-        <p class="topbar-help">本文の整形・出力形式・フロントマター・ファイル名のルールをまとめて管理します。</p>
+        <p class="topbar-help">変換の動作をカスタマイズします。</p>
       </div>
     </header>
 
@@ -53,15 +53,6 @@
           </nav>
         </section>
 
-        <section class="sidebar-block">
-          <p class="sidebar-heading">この画面でできること</p>
-          <ul class="sidebar-list">
-            <li>抽出モードと不要要素の除去</li>
-            <li>画像・リンク・見出しの変換形式</li>
-            <li>フロントマターの ON/OFF と項目選択</li>
-            <li>ファイル名フォーマットと自動動作</li>
-          </ul>
-        </section>
       </aside>
 
       <main class="content">
@@ -75,7 +66,7 @@
               <p class="panel-kicker">本文整理</p>
               <h2>本文の整え方</h2>
             </div>
-            <p class="panel-desc">コンテンツの取得方法と、変換前に除去する要素を設定します。</p>
+            <p class="panel-desc">取得方法と除去する要素を指定します。</p>
           </div>
 
           <!-- 抽出方法 -->
@@ -88,7 +79,7 @@
 
             <label class="setting-row setting-row-ctrl">
               <span class="setting-name">コンテンツ抽出</span>
-              <span class="setting-desc">Readability は記事向けの自動本文抽出、body はページ全体を変換します。</span>
+              <span class="setting-desc">Readability は記事本文を自動抽出、body はページ全体を変換します。</span>
               <span class="setting-control">
                 <select class="setting-select" id="extractionMode">
                   <option value="readability">Readability（推奨）</option>
@@ -99,7 +90,7 @@
 
             <label class="setting-row">
               <span class="setting-name">選択範囲のみ変換</span>
-              <span class="setting-desc">テキストを選択した状態でポップアップを開くと、選択部分だけを Markdown に変換します。</span>
+              <span class="setting-desc">選択中のテキストのみを変換します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="selectionOnly">
               </span>
@@ -117,7 +108,7 @@
 
             <label class="setting-row">
               <span class="setting-name">広告を除去</span>
-              <span class="setting-desc">記事の流れを遮る広告ブロックを Markdown 出力から外します。</span>
+              <span class="setting-desc">広告ブロックを出力から除去します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="removeAds">
               </span>
@@ -125,7 +116,7 @@
 
             <label class="setting-row">
               <span class="setting-name">ヘッダーを除去</span>
-              <span class="setting-desc">サイトのロゴや上部ナビゲーションを本文領域から切り離します。</span>
+              <span class="setting-desc">ロゴや上部ナビを除去します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="removeHeader">
               </span>
@@ -133,7 +124,7 @@
 
             <label class="setting-row">
               <span class="setting-name">フッターを除去</span>
-              <span class="setting-desc">関連記事や著作権表記など、末尾の補助情報を出力から除きます。</span>
+              <span class="setting-desc">末尾の補助情報を除去します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="removeFooter">
               </span>
@@ -141,7 +132,7 @@
 
             <label class="setting-row">
               <span class="setting-name">ナビゲーションバーを除去</span>
-              <span class="setting-desc">メニューやパンくずなど、移動用に使う要素を変換対象から外します。</span>
+              <span class="setting-desc">メニューやパンくずを除去します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="removeNav">
               </span>
@@ -149,7 +140,7 @@
 
             <label class="setting-row">
               <span class="setting-name">サイドバーを除去</span>
-              <span class="setting-desc">関連リンクやウィジェットなど、本文の脇にある補助カラムを取り除きます。</span>
+              <span class="setting-desc">補助カラムを除去します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="removeSidebar">
               </span>
@@ -166,7 +157,7 @@
               <p class="panel-kicker">Output</p>
               <h2>Markdown の出力形式</h2>
             </div>
-            <p class="panel-desc">変換後の Markdown の構造・見た目を細かく調整します。</p>
+            <p class="panel-desc">変換後の Markdown 構造を調整します。</p>
           </div>
 
           <div class="setting-table" role="presentation">
@@ -178,7 +169,7 @@
 
             <label class="setting-row setting-row-ctrl">
               <span class="setting-name">画像の扱い</span>
-              <span class="setting-desc">画像をそのまま保持するか、alt テキストのみにするか、完全に除去するかを選びます。AI への入力用途では「alt のみ」か「除去」が効果的です。</span>
+              <span class="setting-desc">保持 / alt テキストのみ / 除去を選択します。</span>
               <span class="setting-control">
                 <select class="setting-select" id="imageHandling">
                   <option value="keep">そのまま保持</option>
@@ -190,7 +181,7 @@
 
             <label class="setting-row setting-row-ctrl">
               <span class="setting-name">リンクの扱い</span>
-              <span class="setting-desc">リンクを Markdown 形式（[text](url)）で保持するか、テキストのみにして URL を除去するかを選びます。</span>
+              <span class="setting-desc">リンクを保持するか、テキストのみにするかを選択します。</span>
               <span class="setting-control">
                 <select class="setting-select" id="linkHandling">
                   <option value="keep">リンクを保持</option>
@@ -201,7 +192,7 @@
 
             <label class="setting-row setting-row-ctrl">
               <span class="setting-name">見出しレベルのシフト</span>
-              <span class="setting-desc">見出しのレベルを下げます。他の文書に貼り付ける際、h1 が重複しないようにするのに便利です。</span>
+              <span class="setting-desc">他の文書に組み込む際、h1 の重複を防げます。</span>
               <span class="setting-control">
                 <select class="setting-select" id="headingShift">
                   <option value="0">シフトなし</option>
@@ -213,7 +204,7 @@
 
             <label class="setting-row">
               <span class="setting-name">空行を圧縮</span>
-              <span class="setting-desc">3 行以上連続する空行を 2 行にまとめます。出力がすっきりし、AI への入力トークンを節約できます。</span>
+              <span class="setting-desc">3行以上の連続空行を2行に圧縮します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="collapseBlankLines">
               </span>
@@ -230,7 +221,7 @@
               <p class="panel-kicker">Frontmatter</p>
               <h2>メタ情報</h2>
             </div>
-            <p class="panel-desc">ファイル先頭に付与する YAML フロントマターの内容を設定します。</p>
+            <p class="panel-desc">先頭に付与する YAML フロントマターを設定します。</p>
           </div>
 
           <div class="setting-table" role="presentation">
@@ -242,7 +233,7 @@
 
             <label class="setting-row">
               <span class="setting-name">フロントマターを付与する</span>
-              <span class="setting-desc">あとから整理しやすいように、ページ情報を YAML で先頭に追加します。</span>
+              <span class="setting-desc">ページ情報を YAML で先頭に追加します。</span>
               <span class="setting-control">
                 <input class="setting-checkbox" type="checkbox" id="frontmatterEnabled">
               </span>
@@ -254,7 +245,7 @@
           <div id="frontmatterFields" class="sub-panel">
             <div class="sub-panel-header">
               <p class="sub-panel-title">frontmatter に含める項目</p>
-              <p class="sub-panel-desc">必要な項目だけを残したすっきりした YAML を出力できます。</p>
+              <p class="sub-panel-desc">含める項目を選択します。</p>
             </div>
 
             <div class="setting-table setting-table-sub" role="presentation">
@@ -269,7 +260,7 @@
                   タイトル
                   <code class="setting-token">title</code>
                 </span>
-                <span class="setting-desc">ページタイトルを frontmatter に含めます。</span>
+                <span class="setting-desc">ページのタイトルを付与します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="frontmatterTitle">
                 </span>
@@ -280,7 +271,7 @@
                   URL
                   <code class="setting-token">url</code>
                 </span>
-                <span class="setting-desc">変換元ページの URL を記録します。</span>
+                <span class="setting-desc">変換元ページの URL を付与します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="frontmatterUrl">
                 </span>
@@ -291,7 +282,7 @@
                   日付
                   <code class="setting-token">date</code>
                 </span>
-                <span class="setting-desc">保存した日付を frontmatter に書き込みます。</span>
+                <span class="setting-desc">保存した日付を付与します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="frontmatterDate">
                 </span>
@@ -302,7 +293,7 @@
                   概要
                   <code class="setting-token">description</code>
                 </span>
-                <span class="setting-desc">ページの meta description または og:description を取得して付与します。</span>
+                <span class="setting-desc">meta description / og:description を付与します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="frontmatterDescription">
                 </span>
@@ -313,7 +304,7 @@
                   著者
                   <code class="setting-token">author</code>
                 </span>
-                <span class="setting-desc">meta author タグから著者名を取得して付与します。</span>
+                <span class="setting-desc">meta author から著者名を付与します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="frontmatterAuthor">
                 </span>
@@ -324,7 +315,7 @@
                   タグ
                   <code class="setting-token">tags</code>
                 </span>
-                <span class="setting-desc">すべての変換に付与する固定タグを設定します。Obsidian などのノートツールで便利です。</span>
+                <span class="setting-desc">固定タグを全変換に付与します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="frontmatterTags">
                 </span>
@@ -334,7 +325,6 @@
             <!-- タグ入力欄（frontmatterTags ON のときのみ表示） -->
             <div class="setting-row-full" id="tagsValueRow" hidden>
               <label class="setting-name" for="frontmatterTagsValue">タグの値（カンマ区切り）</label>
-              <span class="setting-desc">付与するタグをカンマで区切って入力してください。</span>
               <input class="setting-input-text" type="text" id="frontmatterTagsValue"
                      placeholder="AI, research, notes">
             </div>
@@ -342,7 +332,7 @@
             <!-- カスタムフィールド -->
             <div class="setting-row-full">
               <label class="setting-name" for="frontmatterCustom">カスタムフィールド</label>
-              <span class="setting-desc">YAML 形式で追記したい行を入力してください。複数行可。</span>
+              <span class="setting-desc">YAML 形式で入力（複数行可）。</span>
               <textarea class="setting-textarea" id="frontmatterCustom" rows="3"
                         placeholder="source: 参照先名&#10;status: draft&#10;lang: ja"></textarea>
             </div>
@@ -358,14 +348,14 @@
               <p class="panel-kicker">File &amp; Behavior</p>
               <h2>ファイル名・動作</h2>
             </div>
-            <p class="panel-desc">保存ファイル名のフォーマットと、ポップアップを開いたときの自動動作を設定します。</p>
+            <p class="panel-desc">ファイル名フォーマットと自動動作を設定します。</p>
           </div>
 
           <!-- ファイル名フォーマット -->
           <div class="sub-panel" style="margin: 16px 20px 0">
             <div class="sub-panel-header">
               <p class="sub-panel-title">ファイル名のフォーマット</p>
-              <p class="sub-panel-desc">「保存」ボタンで出力する .md ファイルの名前を設定します。</p>
+              <p class="sub-panel-desc">出力ファイル名のルールを設定します。</p>
             </div>
             <div class="setting-table" role="presentation">
               <div class="table-head" aria-hidden="true">
@@ -376,7 +366,7 @@
 
               <label class="setting-row setting-row-ctrl">
                 <span class="setting-name">日付フォーマット</span>
-                <span class="setting-desc">ファイル名先頭に付与する日付の形式を選びます。</span>
+                <span class="setting-desc">先頭に付与する日付形式。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="filenameDateFormat">
                     <option value="YYYY-MM-DD">YYYY-MM-DD（例: 2026-03-19）</option>
@@ -388,7 +378,7 @@
 
               <label class="setting-row setting-row-ctrl">
                 <span class="setting-name">区切り文字</span>
-                <span class="setting-desc">日付とタイトルの間の区切り文字を選びます。</span>
+                <span class="setting-desc">日付とタイトルの区切り文字。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="filenameSeparator">
                     <option value="_">アンダースコア（_）</option>
@@ -399,7 +389,7 @@
 
               <label class="setting-row setting-row-ctrl">
                 <span class="setting-name">タイトル最大文字数</span>
-                <span class="setting-desc">ファイル名に使うタイトルの最大文字数を指定します（10〜200）。</span>
+                <span class="setting-desc">タイトル部の最大文字数（10〜200）。</span>
                 <span class="setting-control">
                   <input class="setting-input-number" type="number" id="filenameTitleMaxLength"
                          min="10" max="200" step="5">
@@ -412,7 +402,7 @@
           <div class="sub-panel" style="margin: 16px 20px 18px">
             <div class="sub-panel-header">
               <p class="sub-panel-title">ポップアップの動作</p>
-              <p class="sub-panel-desc">ポップアップを開いたときの自動動作を設定します。</p>
+              <p class="sub-panel-desc">ポップアップを開いた際の自動動作。</p>
             </div>
             <div class="setting-table" role="presentation">
               <div class="table-head" aria-hidden="true">
@@ -423,7 +413,7 @@
 
               <label class="setting-row">
                 <span class="setting-name">自動コピー</span>
-                <span class="setting-desc">ポップアップを開いたとき、変換完了と同時に Markdown を自動的にクリップボードにコピーします。</span>
+                <span class="setting-desc">変換完了時にクリップボードへ自動コピーします。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="autoCopy">
                 </span>
@@ -441,7 +431,7 @@
               <p class="panel-kicker">Preview</p>
               <h2>現在の出力例</h2>
             </div>
-            <p class="panel-desc">現在の設定で生成されるファイル名のプレビューです。設定を変更すると即時反映されます。</p>
+            <p class="panel-desc">設定を変更すると即時反映されます。</p>
           </div>
 
           <div class="preview-table" role="presentation">
@@ -458,7 +448,7 @@
     <footer class="footer-bar">
       <div class="footer-copy">
         <span id="saveStatus" class="save-status" data-state="saved" aria-live="polite">保存済み</span>
-        <p class="footer-note">設定の変更はこのブラウザに保存され、次回の変換にも引き継がれます。</p>
+        <p class="footer-note">設定はブラウザに同期保存されます。</p>
       </div>
       <button id="saveBtn" class="btn-save" disabled>変更を保存</button>
     </footer>
