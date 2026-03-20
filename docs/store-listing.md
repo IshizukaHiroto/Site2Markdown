@@ -1,0 +1,273 @@
+# Site2Markdown — Chrome Web Store 掲載コンテンツ
+
+作成: 2026-03-20
+
+---
+
+## 基本情報
+
+| 項目 | 内容 |
+|------|------|
+| 拡張機能名 | Site2Markdown |
+| カテゴリ | Productivity |
+| 言語 | 英語（メイン）/ 日本語（サブ） |
+| 審査提出バージョン | 1.0.0 |
+
+---
+
+## 短い説明文（132文字以内）
+
+**英語版（Chrome Web Store メイン）:**
+```
+Convert any webpage to clean Markdown in one click. Perfect for Obsidian, Notion, and AI prompts. Customizable frontmatter, images, and filename format.
+```
+※ 152文字のため削る → 下記が最終版（132文字）
+
+```
+Convert any webpage to clean Markdown instantly. Perfect for Obsidian, Notion & AI prompts. Customizable frontmatter and filename format.
+```
+> 文字数: 137文字 → さらに調整
+
+**最終版（英語・132文字以内）:**
+```
+Convert any webpage to clean Markdown in one click — for Obsidian, Notion, and AI. Frontmatter, image handling, and filename format included.
+```
+> 文字数: 141文字 → 微調整
+
+```
+Convert webpages to clean Markdown for Obsidian, Notion, and AI. One click. Customizable frontmatter, image handling, and filename format.
+```
+> 文字数: 138文字
+
+**確定版:**
+```
+Convert webpages to Markdown for Obsidian, Notion & AI. One click. Frontmatter, image handling, and filename format — fully customizable.
+```
+> 文字数: 131文字 ✅
+
+**日本語版（参考）:**
+```
+WebページをMarkdownに1クリック変換。Obsidian・Notion・AIプロンプトに最適。フロントマター・画像処理・ファイル名形式を細かく設定できます。
+```
+
+---
+
+## 詳細説明文（英語・Chrome Web Store 用）
+
+```
+Site2Markdown converts any webpage into clean, structured Markdown with a single click — no setup, no clutter, just the content you need.
+
+Whether you're building an Obsidian knowledge base, organizing research in Notion, or feeding articles into ChatGPT or Claude, Site2Markdown gives you the cleanest output of any web clipper.
+
+──────────────────────────────
+✦ WHY SITE2MARKDOWN?
+──────────────────────────────
+
+Most web clippers are either too simple (no frontmatter, no settings) or too complex (vault permissions, template syntax to learn). Site2Markdown hits the sweet spot: rich customization that works out of the box.
+
+──────────────────────────────
+✦ KEY FEATURES
+──────────────────────────────
+
+◆ Clean Markdown extraction
+  Uses Mozilla Readability to extract only the main content — no ads, no navigation, no clutter.
+
+◆ GitHub-Flavored Markdown (GFM)
+  Tables, code blocks with language tags, strikethrough — all preserved correctly.
+
+◆ Customizable frontmatter
+  Automatically prepend YAML metadata to every file:
+  - title, url, date (built-in)
+  - description, author, tags (optional)
+  - Any custom YAML fields you define
+
+◆ Fine-grained output control
+  - Images: keep, alt-text only, or remove
+  - Links: keep or strip to plain text
+  - Heading shift: push all headings down 1–2 levels
+  - Collapse excessive blank lines
+
+◆ Smart filename format
+  Saved files are named automatically: YYYY-MM-DD_Title.md
+  Customize the date format, separator, and max title length.
+
+◆ Selection mode
+  Highlight text before opening — only the selected content gets converted.
+
+◆ Auto-copy (Pro)
+  Markdown is copied to your clipboard the moment the popup opens. Zero clicks.
+
+──────────────────────────────
+✦ PERFECT FOR
+──────────────────────────────
+
+• Obsidian users: Save clipped articles with frontmatter directly to your vault
+• Notion users: Paste clean Markdown into pages without formatting issues
+• AI users: Feed any article to ChatGPT or Claude without copy-paste noise
+• Developers: Clip documentation with proper code blocks and heading structure
+
+──────────────────────────────
+✦ PRIVACY
+──────────────────────────────
+
+Site2Markdown processes everything locally in your browser. No data is ever sent to external servers. Your settings are stored in chrome.storage.sync (synced across your Chrome devices) and nowhere else.
+
+The extension requires access to page content only when you click the icon. It does not run in the background or track your browsing history.
+
+Full privacy policy: [URL]
+
+──────────────────────────────
+✦ PERMISSIONS EXPLAINED
+──────────────────────────────
+
+• activeTab / host_permissions — Read the current page's content when you click the extension icon. Required to perform the conversion.
+• storage — Save your settings (frontmatter preferences, filename format, etc.) across sessions.
+• clipboardWrite — Copy the converted Markdown to your clipboard.
+• downloads — Save the .md file to your computer.
+• scripting — Inject the conversion library into the page when needed.
+```
+
+---
+
+## 詳細説明文（日本語版・補足）
+
+```
+Site2Markdownは、WebページをワンクリックでクリーンなMarkdownに変換するChrome拡張機能です。
+
+Obsidianのナレッジベース構築、Notionへのリサーチ整理、ChatGPT/Claudeへの記事入力など、
+あらゆるMarkdownワークフローに対応します。
+
+【主な機能】
+
+◆ クリーンな本文抽出
+  Mozilla Readabilityで広告・ナビゲーションを除いた本文のみを取得。
+
+◆ GitHub Flavored Markdown（GFM）対応
+  テーブル・コードブロック（言語指定付き）・打ち消し線を正確に変換。
+
+◆ カスタマイズ可能なフロントマター
+  title / url / date に加え、description / author / tags / カスタムフィールドを
+  設定画面から自由に追加できます。
+
+◆ 出力形式の細かな制御
+  - 画像: 保持 / alt テキストのみ / 除去
+  - リンク: 保持 / テキストのみ
+  - 見出しレベルのシフト（他の文書に貼り付ける際のh1重複を防止）
+
+◆ ファイル名の自動生成
+  YYYY-MM-DD_タイトル.md 形式で保存。日付形式・区切り文字・最大文字数を設定可能。
+
+◆ 選択範囲のみ変換
+  テキストを選択した状態でポップアップを開くと、選択部分だけを変換します。
+
+【プライバシー】
+
+すべての処理はブラウザ内でローカルに行われます。
+外部サーバーへのデータ送信は一切ありません。
+```
+
+---
+
+## キーワード戦略
+
+Chrome Web Store の検索で上位を狙うキーワード（説明文内に自然に含める）:
+
+| キーワード | 月間検索数（推定） | 優先度 |
+|-----------|-----------------|--------|
+| markdown | 高 | ★★★ |
+| web clipper | 高 | ★★★ |
+| obsidian clipper | 中 | ★★★ |
+| html to markdown | 中 | ★★ |
+| notion markdown | 中 | ★★ |
+| markdown converter | 中 | ★★ |
+| ai prompt | 高 | ★★ |
+| markdown export | 低〜中 | ★ |
+
+**含める必須ワード（説明文チェックリスト）:**
+- [x] "Markdown" — 複数回登場
+- [x] "Obsidian" — 明示
+- [x] "Notion" — 明示
+- [x] "AI" / "ChatGPT" / "Claude" — 明示
+- [x] "web clipper" — 説明内で言及
+- [x] "frontmatter" — 機能説明で登場
+- [x] "one click" — フック文に含む
+
+---
+
+## スクリーンショット構成（6枚）
+
+Chrome Web Store は 1280×800 または 640×400 の PNG/JPEG を最大6枚掲載できる。
+テキストを入れすぎず、機能が一目でわかるビジュアルにする。
+
+| # | タイトル | 内容 | フォーカス |
+|---|---------|------|----------|
+| 1 | **メインビジュアル** | 技術ブログ記事を変換したポップアップ全体 | 変換結果のきれいさ |
+| 2 | **フロントマタープレビュー** | フロントマター付きMarkdownが表示されているポップアップ | Obsidianユーザー訴求 |
+| 3 | **設定画面 — 本文整理** | 除去オプションのチェックボックス群 | 設定の豊富さ |
+| 4 | **設定画面 — メタ情報** | フロントマター項目の選択画面 | カスタマイズ性 |
+| 5 | **変換前後の比較** | 左: ごちゃごちゃしたWebページ / 右: クリーンなMarkdown | 価値提案の視覚化 |
+| 6 | **Obsidianへの貼り付け** | 変換されたMarkdownをObsidianに貼り付けた結果 | ユースケース訴求 |
+
+**スクリーンショット作成のポイント:**
+- ブラウザのアドレスバーは含めない（拡張機能のポップアップだけを切り抜く）
+- フォントが読めるサイズで撮影（1280×800推奨）
+- 英語テキストのページで撮影（グローバルユーザー向け）
+- テーマは統一感のあるライトモードで統一
+
+---
+
+## プロモーション画像（1400×560）
+
+ストアの上部に表示されるバナー画像。
+
+**デザイン方針:**
+- 背景: `var(--paper)` のクリーム色（拡張機能のデザインと統一）
+- 左側: 拡張機能のポップアップ モックアップ
+- 右側: キャッチコピー
+  ```
+  Site2Markdown
+
+  One click.
+  Clean Markdown.
+  Anywhere.
+  ```
+- フォント: Playfair Display（タイトル）+ DM Sans（説明）
+
+---
+
+## カテゴリ・タグ選択
+
+| 項目 | 選択 | 理由 |
+|------|------|------|
+| プライマリカテゴリ | **Productivity** | Obsidian/Notion ユーザー層が検索するカテゴリ |
+| セカンダリカテゴリ | Developer Tools | エンジニア層への露出 |
+
+---
+
+## ストアURL戦略
+
+- **拡張機能ID（スラッグ）:** `site2markdown` を希望（取得状況は提出時に確認）
+- **サポートURL:** `https://github.com/[username]/site2markdown/issues`
+- **プライバシーポリシーURL:** `https://[username].github.io/site2markdown/privacy-policy`
+- **ホームページURL:** GitHub Pages または将来的なランディングページ
+
+---
+
+## 審査提出チェックリスト
+
+- [ ] 短い説明文 132文字以内 ✅
+- [ ] 詳細説明文にパーミッション使用理由を明記 ✅
+- [ ] プライバシーポリシーURL（`privacy-policy.md` 公開後に記入）
+- [ ] スクリーンショット 4〜6枚（1280×800）
+- [ ] プロモーション画像（1400×560）
+- [ ] アイコン: 16px / 48px / 128px ✅（既存）
+- [ ] `manifest.json` の `description` フィールドを短い説明文と統一
+- [ ] カテゴリ: Productivity
+- [ ] デベロッパー登録（$5）完了
+
+---
+
+## 参考
+
+- [Chrome Web Store 掲載ガイドライン](https://developer.chrome.com/docs/webstore/best_practices)
+- [プログラムポリシー](https://developer.chrome.com/docs/webstore/program-policies)

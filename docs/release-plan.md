@@ -1,0 +1,74 @@
+---
+created: "2026-03-19"
+status: active
+tags: [Chrome拡張, 個人開発, マネタイズ]
+---
+
+# Site2Markdown - リリース & マネタイズ計画
+
+## 概要
+
+WebページをMarkdownに変換するChrome拡張機能。
+フェーズ1で無料公開してユーザーを獲得し、フェーズ2でフリーミアム（買い切り $9）に移行する。
+
+## 目標
+
+- フェーズ1: Chrome Web Store に無料公開し、レビュー100件以上を獲得
+- フェーズ2: フリーミアム化。買い切り $9（¥1,200）で有料機能を提供
+- 長期: 1,000ユーザー・転換率2%で $180 MRR → スケールで収益化
+
+## ビジネス戦略の根拠
+
+- 競合（MarkDownload / Obsidian Web Clipper など）はすべて無料
+- MarkDownload は MV3 移行で開発停滞中 → 今が参入の好機
+- PKM市場は $24.5億（2024）、CAGR 15.8% で成長中
+- Notion 1億ユーザー / Obsidian ユーザーが主なターゲット層
+- 「70,000ユーザーで収益ほぼゼロ」事例より、$3 では収益化困難 → $9 に設定
+- Chrome Web Store 公式決済は廃止済み → ExtensionPay（Stripe連携）を利用予定
+
+## フリーミアム機能区分
+
+| 機能 | 無料 | Pro（$9買い切り） |
+|------|------|-----------------|
+| Markdown変換 | ✅ | ✅ |
+| フロントマター（基本） | ✅ | ✅ |
+| 基本設定 | ✅ | ✅ |
+| 選択範囲変換 | ❌ | ✅ |
+| カスタムフロントマター | ❌ | ✅ |
+| 見出しシフト | ❌ | ✅ |
+| 自動コピー | ❌ | ✅ |
+| 今後追加の新機能 | ❌ | ✅ |
+
+## タスク
+
+### フェーズ1: 無料公開
+- [ ] manifest.json の確認（description / version / アイコン設定）
+- [ ] ストア掲載素材の作成（スクリーンショット 1280×800、プロモーション画像 1400×560）
+- [ ] Google デベロッパー登録（$5 一回払い）
+- [ ] Chrome Web Store に審査提出
+
+### フェーズ2: フリーミアム化
+- [ ] ExtensionPay の導入（Stripe連携）
+- [ ] Pro 機能をライセンスキーで制御する仕組みの実装
+- [ ] 無料 / Pro の機能区分をポップアップ・設定画面に反映
+- [ ] ストアページの説明文を有料プラン対応に更新
+
+## 進捗メモ
+
+### 2026-03-20
+- UI を editorial デザインに全面リニューアル（popup + options）
+- 設定項目を大幅拡充（抽出モード / 画像・リンク処理 / フロントマター詳細 / ファイル名フォーマット / 自動コピー）
+- ビジネスプランをリサーチ → フリーミアム + 買い切り $9 に決定
+- フェーズ1（無料公開）から着手予定
+
+## 関連ドキュメント
+
+- [フィードバック収集 & フリーミアム実装ガイド](./feedback-and-freemium.md)
+- [プランニングギャップ分析](./planning-gaps.md)
+
+## 参考リンク
+
+- [ExtensionPay（Stripe連携決済）](https://extensionpay.com/)
+- [Chrome Web Store デベロッパーダッシュボード](https://chrome.google.com/webstore/devconsole)
+- [Indie Hackers: 70K users, almost no revenue](https://www.indiehackers.com/post/70-000-users-on-my-chrome-extension-and-almost-no-revenue-a9495e2b39)
+- [ExtensionFast: How to Get to $1,000 MRR](https://www.extensionfast.com/blog/how-to-get-to-1000-mrr-with-your-chrome-extension)
