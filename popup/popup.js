@@ -44,6 +44,7 @@ function showStatus(msg, isError = false) {
 function setButtonsEnabled(enabled) {
   document.getElementById('copyBtn').disabled = !enabled;
   document.getElementById('saveBtn').disabled = !enabled;
+  document.getElementById('saveMenuBtn').disabled = !enabled;
 }
 
 /**
@@ -221,8 +222,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // 保存
-  document.getElementById('saveBtn').addEventListener('click', () => {
+  // 保存処理（saveAs: true で名前をつけて保存）
+  function doSave(saveAs = false) {
     const text = document.getElementById('markdownOutput').value;
     const filename = buildFilename(currentTitle, settings);
 
@@ -230,7 +231,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
     downloadUrl = URL.createObjectURL(blob);
 
-    chrome.downloads.download({ url: downloadUrl, filename, saveAs: false }, (downloadId) => {
+    chrome.downloads.download({ url: downloadUrl, filename, saveAs }, (downloadId) => {
       if (chrome.runtime.lastError) {
         showStatus('保存に失敗しました', true);
         return;
@@ -244,6 +245,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
     });
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', () => doSave(false));
+
+  // 保存メニューのトグル
+  const saveMenuBtn = document.getElementById('saveMenuBtn');
+  const saveMenu = document.getElementById('saveMenu');
+
+  saveMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = !saveMenu.hidden;
+    saveMenu.hidden = isOpen;
+    saveMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.getElementById('saveAsBtn').addEventListener('click', () => {
+    saveMenu.hidden = true;
+    saveMenuBtn.setAttribute('aria-expanded', 'false');
+    doSave(true);
+  });
+
+  document.addEventListener('click', () => {
+    if (!saveMenu.hidden) {
+      saveMenu.hidden = true;
+      saveMenuBtn.setAttribute('aria-expanded', 'false');
+    }
   });
 });
 
