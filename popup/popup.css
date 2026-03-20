@@ -463,3 +463,60 @@ body {
   background: var(--red-hover);
   border-color: var(--red-hover);
 }
+
+/* ── Split save button ───────────────────── */
+
+.btn-split {
+  position: relative;
+  display: flex;
+}
+
+.btn-split-main {
+  border-right: none;
+}
+
+.btn-split-toggle {
+  padding: 6px 8px;
+  border-left: 1px solid var(--red-hover);
+}
+
+.btn-split-toggle svg {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.15s ease;
+}
+
+.btn-split-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.save-dropdown {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  right: 0;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  min-width: 148px;
+  z-index: 100;
+  box-shadow: 2px 4px 14px oklch(17% 0.022 252 / 0.13);
+}
+
+.save-menu-item {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+}
+
+.save-menu-item:hover {
+  background: var(--cream);
+  color: var(--red);
+}
