@@ -251,7 +251,7 @@ h1 {
 .content {
   min-height: 0;
   overflow: hidden;
-  padding: 20px;
+  padding: 0;
   background: var(--surface);
 }
 
@@ -262,8 +262,6 @@ h1 {
   display: grid;
   grid-template-rows: auto 1fr;
   background: var(--surface-float);
-  border-radius: 4px;
-  box-shadow: 0 4px 24px rgba(27, 28, 25, 0.06), 0 1px 4px rgba(27, 28, 25, 0.04);
   overflow: hidden;
 }
 
@@ -613,7 +611,7 @@ h1 {
   padding: 9px 18px;
   border: none;
   border-radius: 4px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-container));
+  background: var(--primary);
   color: var(--on-primary);
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 14px;
@@ -804,7 +802,7 @@ h1 {
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-container));
+  background: var(--primary);
   color: var(--on-primary);
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 12px;
@@ -854,7 +852,7 @@ h1 {
     border-bottom-color: var(--primary);
   }
 
-  .content { padding-top: 16px; }
+  .content { padding: 0; }
 }
 
 @media (max-width: 760px) {
