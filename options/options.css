@@ -38,7 +38,7 @@ html {
 
 body {
   height: 100%;
-  font-family: 'DM Sans', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   font-size: 14px;
   color: var(--ink);
   background: var(--shell);
@@ -63,6 +63,38 @@ body {
   padding: 20px 28px 17px;
   border-bottom: 2px solid var(--ink);
   background: var(--paper);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Language toggle button ─────────────── */
+
+.lang-btn {
+  height: 27px;
+  padding: 0 8px;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  color: var(--ink-light);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.lang-btn:hover,
+.lang-btn:focus-visible {
+  color: var(--red);
+  border-color: var(--red);
+  background: var(--red-light);
+  outline: none;
 }
 
 .topbar-brand {
@@ -100,7 +132,7 @@ h1 {
 }
 
 .topbar-meta {
-  max-width: min(44vw, 460px);
+  max-width: min(40vw, 420px);
   text-align: right;
   display: grid;
   gap: 5px;
@@ -578,7 +610,7 @@ h1 {
   border: 1px solid var(--red);
   background: var(--red);
   color: var(--paper);
-  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -615,7 +647,7 @@ h1 {
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
-  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   font-size: 13px;
   cursor: pointer;
   min-width: 160px;
@@ -638,7 +670,7 @@ h1 {
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   font-size: 13px;
   text-align: center;
   transition: border-color 0.12s ease;
@@ -657,7 +689,7 @@ h1 {
   border: 1px solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
-  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   font-size: 13px;
   transition: border-color 0.12s ease;
 }
@@ -775,7 +807,7 @@ h1 {
   border: 1px solid var(--red);
   background: var(--red);
   color: var(--paper);
-  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -844,6 +876,11 @@ h1 {
     padding: 16px;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .topbar-right {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .topbar-meta {

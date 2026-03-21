@@ -6,7 +6,7 @@
   <title>Site2Markdown</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Noto+Sans+JP:wght@400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
@@ -18,16 +18,26 @@
           <span class="app-name">Site2Markdown</span>
         </div>
       </div>
-      <button id="feedbackBtn" class="icon-btn" title="フィードバックを送る" aria-label="フィードバックを送る">
-        <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M7 1C3.69 1 1 3.46 1 6.5c0 1.47.61 2.8 1.6 3.77L2 13l3.09-1.03C5.67 12.3 6.32 12.5 7 12.5c3.31 0 6-2.46 6-5.5S10.31 1 7 1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <button id="optionsBtn" class="icon-btn" title="設定を開く" aria-label="設定を開く">
-        <svg class="fa-gear-icon" viewBox="0 -16 512 544" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M195.1 9.5C198.1-5.3 211.2-16 226.4-16l59.8 0c15.2 0 28.3 10.7 31.3 25.5L332 79.5c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9l-29.9 51.8c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5l-59.8 0c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8L73.5 432.3c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7L12.3 185.8c-11.4-10.1-14-26.8-6.5-39.9L35.7 94.1c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8L195.1 9.5zM256.3 336a80 80 0 1 0 -.6-160 80 80 0 1 0 .6 160z"/>
-        </svg>
-      </button>
+      <div class="header-actions">
+        <button id="langBtn" class="lang-btn" aria-label="Switch language">EN</button>
+        <button id="feedbackBtn" class="icon-btn" aria-label="フィードバックを送る">
+          <!-- Message square icon -->
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="1.5" y="1.5" width="13" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M4 14.5l2.5-3H13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4.5 6h7M4.5 8.5h4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button id="optionsBtn" class="icon-btn" aria-label="設定を開く">
+          <!-- Settings / sliders icon -->
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2 4.5h12M2 8h12M2 11.5h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <circle cx="5.5" cy="4.5" r="1.5" fill="var(--paper)" stroke="currentColor" stroke-width="1.3"/>
+            <circle cx="10.5" cy="8" r="1.5" fill="var(--paper)" stroke="currentColor" stroke-width="1.3"/>
+            <circle cx="6" cy="11.5" r="1.5" fill="var(--paper)" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+        </button>
+      </div>
     </header>
 
     <section id="page-info" class="panel">
@@ -40,14 +50,14 @@
         </div>
         <div id="page-domain"></div>
       </div>
-      <div id="page-title">読み込み中...</div>
+      <div id="page-title" data-i18n-loading>読み込み中...</div>
       <div id="page-url"></div>
     </section>
 
     <section id="properties-section" class="panel">
       <button id="properties-toggle" class="section-toggle">
         <span class="section-title-group">
-          <span class="section-title">プロパティ</span>
+          <span class="section-title" id="prop-section-title">プロパティ</span>
         </span>
         <svg id="toggle-arrow" class="arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true">
           <path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -72,7 +82,8 @@
 
     <section id="content-section" class="panel panel-fill">
       <div class="content-header">
-        <div class="content-title">Markdown Preview</div>
+        <span class="content-title" id="content-title-text">Markdown</span>
+        <span id="char-count" class="char-count"></span>
       </div>
       <div id="content-wrapper" class="is-loading">
         <textarea id="markdownOutput" readonly spellcheck="false" placeholder="変換中..."></textarea>
@@ -80,7 +91,7 @@
     </section>
 
     <div id="upgrade-bar" hidden>
-      <span class="upgrade-text">Pro機能でさらに便利に</span>
+      <span class="upgrade-text" id="upgrade-text">Pro機能でさらに便利に</span>
       <button id="upgradeBtn" class="btn-upgrade">アップグレード — $9</button>
     </div>
 
@@ -92,7 +103,7 @@
             <rect x="4.5" y="4.5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
             <path d="M2.5 9.5H2A1.5 1.5 0 01.5 8V2A1.5 1.5 0 012 .5h6A1.5 1.5 0 019.5 2v.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
           </svg>
-          コピー
+          <span class="btn-label" id="copy-label">コピー</span>
         </button>
         <div class="btn-split" id="saveSplit">
           <button id="saveBtn" class="btn btn-primary btn-split-main" disabled>
@@ -100,7 +111,7 @@
               <path d="M7 1v8M4 6l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M1 10v1.5A1.5 1.5 0 002.5 13h9a1.5 1.5 0 001.5-1.5V10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
             </svg>
-            保存
+            <span class="btn-label" id="save-label">保存</span>
           </button>
           <button id="saveMenuBtn" class="btn btn-primary btn-split-toggle" disabled aria-haspopup="true" aria-expanded="false">
             <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
