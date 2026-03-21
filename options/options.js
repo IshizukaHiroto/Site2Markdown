@@ -5,9 +5,9 @@
 
 const DEFAULT_SETTINGS = {
   removeAds:               false,
-  removeHeader:            false,
-  removeFooter:            false,
-  removeNav:               false,
+  removeHeader:            true,
+  removeFooter:            true,
+  removeNav:               true,
   removeSidebar:           false,
   imageHandling:           'keep',
   linkHandling:            'keep',
@@ -221,6 +221,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (input.tagName === 'TEXTAREA' || input.tagName === 'INPUT') {
       input.addEventListener('input', handler);
     }
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('すべての設定をデフォルトに戻しますか？')) return;
+    applySettingsToForm(DEFAULT_SETTINGS);
+    updateSaveUI();
   });
 
   document.getElementById('saveBtn').addEventListener('click', () => {

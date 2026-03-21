@@ -5,9 +5,9 @@
 
 const DEFAULT_SETTINGS = {
   removeAds:               false,
-  removeHeader:            false,
-  removeFooter:            false,
-  removeNav:               false,
+  removeHeader:            true,
+  removeFooter:            true,
+  removeNav:               true,
   removeSidebar:           false,
   imageHandling:           'keep',
   linkHandling:            'keep',
@@ -173,7 +173,7 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
         const fragment = range.cloneContents();
         const div = document.createElement('div');
         div.appendChild(fragment);
-        div.querySelectorAll('script, noscript, iframe').forEach((el) => el.remove());
+        div.querySelectorAll('script, noscript, iframe, style').forEach((el) => el.remove());
         contentHtml = div.innerHTML;
       }
     }
@@ -181,8 +181,8 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     // 通常抽出（selectionOnly 未適用の場合）
     if (contentHtml === null) {
       const documentClone = document.cloneNode(true);
-      // script・noscript・iframe は設定に関係なく常に除去
-      documentClone.querySelectorAll('script, noscript, iframe').forEach((el) => el.remove());
+      // script・noscript・iframe・style は設定に関係なく常に除去
+      documentClone.querySelectorAll('script, noscript, iframe, style').forEach((el) => el.remove());
       removeUnwantedElements(documentClone, settings);
 
       if (settings.extractionMode === 'body') {

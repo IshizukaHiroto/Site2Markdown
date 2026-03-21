@@ -4,9 +4,9 @@
 
 const DEFAULT_SETTINGS = {
   removeAds:               false,
-  removeHeader:            false,
-  removeFooter:            false,
-  removeNav:               false,
+  removeHeader:            true,
+  removeFooter:            true,
+  removeNav:               true,
   removeSidebar:           false,
   imageHandling:           'keep',
   linkHandling:            'keep',
