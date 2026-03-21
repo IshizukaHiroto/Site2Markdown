@@ -3,6 +3,12 @@
  * ページDOMにアクセスし、Markdown変換を行うコアロジック
  */
 
+// 重複注入防止（scripting.executeScript で複数回注入されても1回だけ初期化）
+if (window.__s2md_initialized) {
+  // 既に初期化済み — 何もしない
+} else {
+window.__s2md_initialized = true;
+
 const DEFAULT_SETTINGS = {
   removeAds:               false,
   removeHeader:            true,
@@ -265,3 +271,5 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 
   return true; // 非同期レスポンスを示す必須フラグ
 });
+
+} // end of __s2md_initialized guard

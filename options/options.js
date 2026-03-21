@@ -58,10 +58,55 @@ const FORM_FIELDS = [
   { id: 'autoCopy',               type: 'checkbox' },
 ];
 
+// Pro機能として制限する設定キー
+const PRO_SETTING_IDS = new Set([
+  'selectionOnly',
+  'frontmatterCustom',
+  'headingShift',
+  'linkHandling',
+  'autoCopy',
+]);
+
 const SETTING_KEYS = Object.keys(DEFAULT_SETTINGS);
 
 let lastSavedSettings = { ...DEFAULT_SETTINGS };
 let isSaving = false;
+
+/**
+ * Proゲートを適用する（Freeプランの場合 Pro設定を無効化）
+ */
+function applyProGate(isPro) {
+  const upgradeSection = document.getElementById('upgrade-section');
+  if (isPro) {
+    if (upgradeSection) upgradeSection.hidden = true;
+    return;
+  }
+
+  // Pro設定のコントロールを無効化
+  PRO_SETTING_IDS.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.disabled = true;
+      // 親の setting-row に locked クラスを追加
+      const row = el.closest('[data-pro]');
+      if (row) row.classList.add('is-locked');
+    }
+  });
+  // headingShift の 0 以外のオプションを無効化
+  const headingShiftEl = document.getElementById('headingShift');
+  if (headingShiftEl) {
+    Array.from(headingShiftEl.options).forEach((opt) => {
+      if (opt.value !== '0') opt.disabled = true;
+    });
+  }
+  // linkHandling の textOnly を無効化
+  const linkHandlingEl = document.getElementById('linkHandling');
+  if (linkHandlingEl) {
+    Array.from(linkHandlingEl.options).forEach((opt) => {
+      if (opt.value === 'textOnly') opt.disabled = true;
+    });
+  }
+}
 
 function initSidebarTabs() {
   const tabs = Array.from(document.querySelectorAll('.side-link[data-target]'));
@@ -192,10 +237,11 @@ function collectSettingsFromForm() {
 document.addEventListener('DOMContentLoaded', () => {
   initSidebarTabs();
 
-  chrome.storage.sync.get(DEFAULT_SETTINGS, (settings) => {
+  chrome.storage.sync.get({ ...DEFAULT_SETTINGS, isPro: false }, (settings) => {
     const normalized = normalizeSettings(settings);
     lastSavedSettings = normalized;
     applySettingsToForm(normalized);
+    applyProGate(settings.isPro);
     updateSaveUI();
   });
 
@@ -245,4 +291,11 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSaveUI();
     });
   });
+
+  const upgradeBtn = document.getElementById('upgradeBtn');
+  if (upgradeBtn) {
+    upgradeBtn.addEventListener('click', () => {
+      chrome.tabs.create({ url: 'https://forms.gle/XrBjeDDyKa5GLVJg9' });
+    });
+  }
 });

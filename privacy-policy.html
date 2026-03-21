@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Site2Markdown</title>
+  <style>
+    :root {
+      --paper:    #fdfaf5;
+      --ink:      #1a1a2e;
+      --ink-mid:  #555570;
+      --ink-light:#8888a8;
+      --red:      #c0392b;
+      --rule:     #d8d4cc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Helvetica Neue', 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 48px 24px 80px;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+
+    /* ── Language toggle ── */
+    .lang-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 24px;
+    }
+    .lang-btn {
+      padding: 5px 14px;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--ink-mid);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+    }
+    .lang-btn:first-child { border-right: none; }
+    .lang-btn.active {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+    .lang-btn:not(.active):hover {
+      border-color: var(--ink-mid);
+      color: var(--ink);
+    }
+
+    /* ── Content sections ── */
+    .lang-content { display: none; }
+    .lang-content.visible { display: block; }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+    .app-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .meta { margin-top: 10px; font-size: 13px; color: var(--ink-light); }
+
+    /* ── Body ── */
+    h2 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 36px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--rule);
+    }
+    h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin: 24px 0 8px;
+    }
+    p { margin: 10px 0; color: var(--ink-mid); }
+    ul { margin: 10px 0 10px 20px; color: var(--ink-mid); }
+    li { margin: 4px 0; }
+    strong { color: var(--ink); }
+    code {
+      font-family: 'Courier New', Consolas, monospace;
+      font-size: 13px;
+      background: #f0ede6;
+      padding: 1px 5px;
+    }
+    .highlight-box {
+      margin: 16px 0;
+      padding: 14px 18px;
+      background: #f5f2ec;
+      border-left: 3px solid var(--ink);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th {
+      padding: 9px 14px;
+      background: #f0ede6;
+      border: 1px solid var(--rule);
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+    td { padding: 9px 14px; border: 1px solid var(--rule); color: var(--ink-mid); vertical-align: top; }
+    td:first-child { font-family: 'Courier New', Consolas, monospace; font-size: 12.5px; color: var(--ink); white-space: nowrap; }
+    a { color: var(--red); }
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+      font-size: 12px;
+      color: var(--ink-light);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">日本語</button>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">English</button>
+    </div>
+
+    <!-- ═══════════════════════════════ JAPANESE ═══════════════════════════════ -->
+    <div class="lang-content visible" id="content-ja">
+
+      <header>
+        <p class="app-name">Site2Markdown — Chrome Extension</p>
+        <h1>プライバシーポリシー</h1>
+        <p class="meta">最終更新日: 2026年3月21日</p>
+      </header>
+
+      <h2>はじめに</h2>
+      <p>Site2Markdown（以下「本拡張機能」）は、WebページをMarkdown形式に変換するChrome拡張機能です。</p>
+      <div class="highlight-box">
+        Site2Markdown は個人情報を一切収集・保存・外部送信しません。すべての処理はブラウザ内でローカルに完結します。
+      </div>
+
+      <h2>取り扱う情報</h2>
+
+      <h3>保存する情報（設定値のみ）</h3>
+      <p>ユーザーが設定画面で変更した以下の設定値を <code>chrome.storage.sync</code> に保存します。この情報はあなた自身のChromeアカウントを通じてデバイス間で同期され、外部サーバーには送信されません。</p>
+      <ul>
+        <li>除去オプション（広告・ヘッダー・フッター・ナビゲーション・サイドバー）</li>
+        <li>画像・リンクの処理方法</li>
+        <li>見出しレベルのシフト設定</li>
+        <li>フロントマターの項目設定（タイトル・URL・日付・タグ等）</li>
+        <li>ファイル名フォーマット設定</li>
+        <li>その他の変換オプション</li>
+      </ul>
+
+      <h3>収集しない情報</h3>
+      <ul>
+        <li>閲覧履歴・訪問したURLの記録</li>
+        <li>変換したページの内容</li>
+        <li>個人を特定できる情報（氏名・メールアドレス・IPアドレス等）</li>
+        <li>クリップボードの内容</li>
+        <li>ダウンロードしたファイルの内容</li>
+      </ul>
+
+      <h2>ページコンテンツへのアクセス</h2>
+      <p>本拡張機能は、<strong>ユーザーがアイコンをクリックした瞬間にのみ</strong>、現在表示しているページの内容を読み取ります。読み取ったコンテンツはブラウザ内でMarkdownに変換され、ポップアップに表示するためだけに使用されます。</p>
+      <p><strong>コンテンツはいかなる外部サーバーにも送信されません。</strong>バックグラウンドでの監視・記録も行いません。</p>
+
+      <h2>使用するパーミッションと目的</h2>
+      <table>
+        <thead><tr><th>パーミッション</th><th>使用目的</th></tr></thead>
+        <tbody>
+          <tr><td>activeTab</td><td>アイコンをクリックしたときのみ、現在のページのコンテンツにアクセスします。他のタブやバックグラウンドへのアクセスは行いません。</td></tr>
+          <tr><td>storage</td><td>変換設定を保存・復元します。</td></tr>
+          <tr><td>clipboardWrite</td><td>「コピー」ボタン押下時にMarkdownをクリップボードへ書き込みます。</td></tr>
+          <tr><td>downloads</td><td>「保存」ボタン押下時に <code>.md</code> ファイルをダウンロードします。</td></tr>
+          <tr><td>scripting</td><td>変換ライブラリ（Readability・Turndown）をページに動的注入します。</td></tr>
+        </tbody>
+      </table>
+
+      <h2>同梱するサードパーティライブラリ</h2>
+      <p>以下のオープンソースライブラリがブラウザ内でローカルに動作します。外部へのデータ送信は行いません。</p>
+      <ul>
+        <li><strong>Mozilla Readability</strong> — Apache 2.0 ライセンス — 記事本文の自動抽出</li>
+        <li><strong>Turndown</strong> — MIT ライセンス — HTML→Markdown 変換</li>
+        <li><strong>Turndown Plugin GFM</strong> — MIT ライセンス — GitHub Flavored Markdown 対応</li>
+      </ul>
+
+      <h2>第三者へのデータ提供</h2>
+      <p>ユーザーのデータを第三者に販売・提供・共有することはありません。</p>
+      <p><strong>Pro版ご利用時（将来予定）:</strong> 決済処理にExtensionPay（Stripe）を利用する予定です。決済情報はStripeに直接送信され、開発者はカード番号等の機密情報を取得しません。詳細は <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripeのプライバシーポリシー</a> をご参照ください。</p>
+
+      <h2>データの保持と削除</h2>
+      <ul>
+        <li>本拡張機能をアンインストールすると、保存された設定データはすべて削除されます。</li>
+        <li>設定画面から「デフォルトに戻す」で個別にリセットできます。</li>
+      </ul>
+
+      <h2>お子様のプライバシー</h2>
+      <p>本拡張機能は13歳未満のお子様を対象としておらず、意図的にお子様の個人情報を収集することはありません。</p>
+
+      <h2>ポリシーの変更</h2>
+      <p>本プライバシーポリシーは必要に応じて更新する場合があります。重要な変更がある場合は、拡張機能のアップデートノートに記載します。</p>
+
+      <h2>お問い合わせ</h2>
+      <p>本プライバシーポリシーに関するご質問は、<a href="https://forms.gle/XrBjeDDyKa5GLVJg9" target="_blank" rel="noopener">こちらのフォーム</a>よりお問い合わせください。</p>
+
+    </div>
+
+    <!-- ═══════════════════════════════ ENGLISH ════════════════════════════════ -->
+    <div class="lang-content" id="content-en">
+
+      <header>
+        <p class="app-name">Site2Markdown — Chrome Extension</p>
+        <h1>Privacy Policy</h1>
+        <p class="meta">Last updated: March 21, 2026</p>
+      </header>
+
+      <h2>Overview</h2>
+      <p>Site2Markdown is a Chrome extension that converts web pages to Markdown format.</p>
+      <div class="highlight-box">
+        Site2Markdown does not collect, store, or transmit any personal data to external servers. All processing happens locally within your browser.
+      </div>
+
+      <h2>Information We Handle</h2>
+
+      <h3>Information We Store (Settings Only)</h3>
+      <p>The extension saves the following user-configured settings to <code>chrome.storage.sync</code>, which syncs across your devices via your Chrome account. This data is never sent to any external server.</p>
+      <ul>
+        <li>Cleanup options (remove ads, headers, footers, navigation, sidebars)</li>
+        <li>Image and link handling preferences</li>
+        <li>Heading level shift setting</li>
+        <li>Frontmatter field configuration (title, URL, date, tags, etc.)</li>
+        <li>Filename format settings</li>
+        <li>Other conversion options</li>
+      </ul>
+
+      <h3>Information We Never Collect</h3>
+      <ul>
+        <li>Browsing history or visited URLs</li>
+        <li>Content of pages you convert</li>
+        <li>Personal identifiable information (name, email, IP address, etc.)</li>
+        <li>Clipboard contents</li>
+        <li>Downloaded file contents</li>
+      </ul>
+
+      <h2>How We Access Page Content</h2>
+      <p>The extension reads the current page content <strong>only when you click the extension icon</strong>. The content is converted to Markdown entirely within your browser and displayed in the popup.</p>
+      <p><strong>Page content is never sent to any external server.</strong> The extension performs no background monitoring or logging.</p>
+
+      <h2>Permissions and Their Purpose</h2>
+      <table>
+        <thead><tr><th>Permission</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>activeTab</td><td>Accesses the current page content only when you click the icon. No access to other tabs or background pages.</td></tr>
+          <tr><td>storage</td><td>Saves and restores your conversion settings.</td></tr>
+          <tr><td>clipboardWrite</td><td>Writes Markdown to the clipboard when you click "Copy".</td></tr>
+          <tr><td>downloads</td><td>Downloads the <code>.md</code> file when you click "Save".</td></tr>
+          <tr><td>scripting</td><td>Dynamically injects conversion libraries (Readability, Turndown) into the page.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Third-Party Libraries</h2>
+      <p>The following open-source libraries run locally in your browser. They do not transmit data externally.</p>
+      <ul>
+        <li><strong>Mozilla Readability</strong> — Apache 2.0 License — Article content extraction</li>
+        <li><strong>Turndown</strong> — MIT License — HTML to Markdown conversion</li>
+        <li><strong>Turndown Plugin GFM</strong> — MIT License — GitHub Flavored Markdown support</li>
+      </ul>
+
+      <h2>Data Sharing</h2>
+      <p>We do not sell, share, or disclose any user data to third parties.</p>
+      <p><strong>Regarding future Pro plan (planned):</strong> Payment processing will use ExtensionPay (powered by Stripe). Payment information is sent directly to Stripe. We never receive or store your credit card details. See <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's Privacy Policy</a> for details.</p>
+
+      <h2>Data Retention and Deletion</h2>
+      <ul>
+        <li>Uninstalling the extension removes all stored settings data.</li>
+        <li>You can reset individual settings from the options page at any time.</li>
+      </ul>
+
+      <h2>Children's Privacy</h2>
+      <p>This extension is not directed to children under 13 and does not knowingly collect personal information from children under 13.</p>
+
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Material changes will be noted in the extension's update release notes.</p>
+
+      <h2>Contact</h2>
+      <p>For questions about this Privacy Policy, please use <a href="https://forms.gle/XrBjeDDyKa5GLVJg9" target="_blank" rel="noopener">this contact form</a>.</p>
+
+    </div>
+
+    <footer>
+      <p>Site2Markdown · <a href="https://github.com/IshizukaHiroto/site2markdown">GitHub</a></p>
+    </footer>
+
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.getElementById('content-ja').classList.toggle('visible', lang === 'ja');
+      document.getElementById('content-en').classList.toggle('visible', lang === 'en');
+      document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
+    }
+
+    // ブラウザ言語に合わせて初期表示を設定
+    if (navigator.language && !navigator.language.startsWith('ja')) {
+      setLang('en');
+    }
+  </script>
+</body>
+</html>

@@ -44,7 +44,7 @@ body {
 #app {
   height: 100%;
   display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto auto;
   background: var(--cream);
   animation: popup-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -378,6 +378,43 @@ body {
 #markdownOutput::placeholder {
   color: var(--rule-strong);
   font-style: italic;
+}
+
+/* ── Upgrade bar ────────────────────────── */
+
+#upgrade-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 12px;
+  background: var(--red-light);
+  border-top: 1px solid color-mix(in oklch, var(--red) 18%, transparent);
+}
+
+.upgrade-text {
+  font-size: 11px;
+  color: var(--red);
+  font-weight: 500;
+}
+
+.btn-upgrade {
+  padding: 4px 10px;
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: var(--paper);
+  font-family: 'DM Sans', 'Hiragino Sans', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s ease;
+}
+
+.btn-upgrade:hover {
+  background: var(--red-hover);
+  border-color: var(--red-hover);
 }
 
 /* ── Action bar ─────────────────────────── */

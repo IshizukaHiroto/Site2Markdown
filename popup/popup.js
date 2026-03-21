@@ -2,6 +2,19 @@
  * Site2Markdown - Popup Script
  */
 
+// ── 外部リンク（後でURLを差し替える）──────────────────────
+const FEEDBACK_URL = 'https://forms.gle/XrBjeDDyKa5GLVJg9';
+const UPGRADE_URL  = 'https://forms.gle/XrBjeDDyKa5GLVJg9'; // Pro waitlist (ExtensionPay に切り替え予定)
+
+// ── Pro機能の制限（Freeプランで無効化する設定値）──────────
+const FREE_OVERRIDES = {
+  selectionOnly:     false,
+  frontmatterCustom: '',
+  headingShift:      0,
+  linkHandling:      'keep',
+  autoCopy:          false,
+};
+
 const DEFAULT_SETTINGS = {
   removeAds:               false,
   removeHeader:            true,
@@ -47,9 +60,6 @@ function setButtonsEnabled(enabled) {
   document.getElementById('saveMenuBtn').disabled = !enabled;
 }
 
-/**
- * ページ情報エリアにタイトル・URLを表示する
- */
 function setPageInfo(tab) {
   document.getElementById('page-title').textContent = tab.title || '(無題)';
   try {
@@ -75,9 +85,6 @@ function setPageInfo(tab) {
   }
 }
 
-/**
- * プロパティ行を設定値に応じて表示/非表示切り替え
- */
 function applyPropertyVisibility(settings) {
   const show = settings.frontmatterEnabled;
   document.getElementById('properties-section').style.display = show ? '' : 'none';
@@ -89,9 +96,6 @@ function applyPropertyVisibility(settings) {
   }
 }
 
-/**
- * プロパティ値をセットする
- */
 function setPropertyValues(tab) {
   document.getElementById('prop-title-value').textContent = tab.title || '(無題)';
   document.getElementById('prop-url-value').textContent = tab.url || '';
@@ -101,42 +105,38 @@ function setPropertyValues(tab) {
 }
 
 /**
- * Content Scriptに変換リクエストを送信（未注入時はインジェクト後にリトライ）
+ * スクリプトを動的注入してから変換リクエストを送信する
+ * （activeTab パーミッションを使用 — content_scripts の自動注入なし）
  */
 async function requestConversion(tabId, settings) {
   return new Promise((resolve) => {
-    chrome.tabs.sendMessage(tabId, { action: 'convert', settings }, (response) => {
-      if (chrome.runtime.lastError) {
-        chrome.scripting.executeScript(
-          {
-            target: { tabId },
-            files: [
-              'vendor/Readability.js',
-              'vendor/turndown.js',
-              'vendor/turndown-plugin-gfm.js',
-              'content/content.js',
-            ],
-          },
-          () => {
-            if (chrome.runtime.lastError) {
-              resolve({ error: 'このページでは実行できません（chrome:// などの制限されたページ）' });
-              return;
-            }
-            chrome.tabs.sendMessage(tabId, { action: 'convert', settings }, (res) => {
-              resolve(res || { error: '変換に失敗しました' });
-            });
+    chrome.scripting.executeScript(
+      {
+        target: { tabId },
+        files: [
+          'vendor/Readability.js',
+          'vendor/turndown.js',
+          'vendor/turndown-plugin-gfm.js',
+          'content/content.js',
+        ],
+      },
+      () => {
+        if (chrome.runtime.lastError) {
+          resolve({ error: 'このページでは実行できません（chrome:// などの制限されたページ）' });
+          return;
+        }
+        chrome.tabs.sendMessage(tabId, { action: 'convert', settings }, (res) => {
+          if (chrome.runtime.lastError) {
+            resolve({ error: '変換に失敗しました' });
+            return;
           }
-        );
-        return;
+          resolve(res || { error: '変換に失敗しました' });
+        });
       }
-      resolve(response || { error: '変換に失敗しました' });
-    });
+    );
   });
 }
 
-/**
- * 設定に基づいてファイル名を生成する
- */
 function buildFilename(title, settings) {
   const sep = settings.filenameSeparator || '_';
   const maxLen = Number(settings.filenameTitleMaxLength) || 50;
@@ -157,7 +157,6 @@ function buildFilename(title, settings) {
   return `${datePart}${sep}${safeName}.md`;
 }
 
-/** プロパティセクションの折りたたみ */
 function initPropertiesToggle() {
   const btn = document.getElementById('properties-toggle');
   const body = document.getElementById('properties-body');
@@ -175,9 +174,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   initPropertiesToggle();
   setButtonsEnabled(false);
 
-  const settings = await new Promise((resolve) =>
-    chrome.storage.sync.get(DEFAULT_SETTINGS, resolve)
-  );
+  // 設定とProステータスを並列取得
+  const [storageResult] = await Promise.all([
+    new Promise((resolve) => chrome.storage.sync.get({ ...DEFAULT_SETTINGS, isPro: false }, resolve)),
+  ]);
+
+  const isPro = storageResult.isPro;
+  let settings = storageResult;
+
+  // Freeプランの場合はPro機能を制限
+  if (!isPro) {
+    settings = Object.assign({}, settings, FREE_OVERRIDES);
+    document.getElementById('upgrade-bar').hidden = false;
+  }
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -201,7 +210,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('markdownOutput').value = response.markdown;
   setButtonsEnabled(true);
 
-  // 自動コピー
+  // 自動コピー（Proのみ）
   if (settings.autoCopy) {
     try {
       await navigator.clipboard.writeText(response.markdown);
@@ -222,7 +231,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // 保存処理（saveAs: true で名前をつけて保存）
+  // 保存処理
   function doSave(saveAs = false) {
     const text = document.getElementById('markdownOutput').value;
     const filename = buildFilename(currentTitle, settings);
@@ -276,4 +285,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 document.getElementById('optionsBtn').addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
+});
+
+document.getElementById('feedbackBtn').addEventListener('click', () => {
+  chrome.tabs.create({ url: FEEDBACK_URL });
+});
+
+document.getElementById('upgradeBtn').addEventListener('click', () => {
+  chrome.tabs.create({ url: UPGRADE_URL });
 });

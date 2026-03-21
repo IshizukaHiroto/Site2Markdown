@@ -52,6 +52,14 @@
             </button>
           </nav>
         </section>
+
+        <section class="sidebar-block" id="upgrade-section">
+          <div class="upgrade-card">
+            <p class="upgrade-card-title">Pro にアップグレード</p>
+            <p class="upgrade-card-desc">選択範囲変換・リンク除去・見出しシフト・カスタムフィールド・自動コピーが使えます。</p>
+            <button id="upgradeBtn" class="btn-upgrade-sidebar">アップグレード — $9</button>
+          </div>
+        </section>
       </aside>
 
       <main class="content">
@@ -87,8 +95,8 @@
                 </span>
               </label>
 
-              <label class="setting-row">
-                <span class="setting-name">選択範囲のみ変換</span>
+              <label class="setting-row" data-pro>
+                <span class="setting-name">選択範囲のみ変換 <span class="pro-badge">PRO</span></span>
                 <span class="setting-desc">選択中のテキストのみを変換します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="selectionOnly">
@@ -179,8 +187,8 @@
                 </span>
               </label>
 
-              <label class="setting-row setting-row-ctrl">
-                <span class="setting-name">リンクの扱い</span>
+              <label class="setting-row setting-row-ctrl" data-pro>
+                <span class="setting-name">リンクの扱い <span class="pro-badge">PRO</span></span>
                 <span class="setting-desc">リンクを保持するか、テキストのみにするかを選択します。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="linkHandling">
@@ -190,8 +198,8 @@
                 </span>
               </label>
 
-              <label class="setting-row setting-row-ctrl">
-                <span class="setting-name">見出しレベルのシフト</span>
+              <label class="setting-row setting-row-ctrl" data-pro>
+                <span class="setting-name">見出しレベルのシフト <span class="pro-badge">PRO</span></span>
                 <span class="setting-desc">他の文書に組み込む際、h1 の重複を防げます。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="headingShift">
@@ -330,8 +338,8 @@
                        placeholder="AI, research, notes">
               </div>
 
-              <div class="setting-row-full">
-                <label class="setting-name" for="frontmatterCustom">カスタムフィールド</label>
+              <div class="setting-row-full" data-pro>
+                <label class="setting-name" for="frontmatterCustom">カスタムフィールド <span class="pro-badge">PRO</span></label>
                 <span class="setting-desc">YAML 形式で入力（複数行可）。</span>
                 <textarea class="setting-textarea" id="frontmatterCustom" rows="3"
                           placeholder="source: 参照先名&#10;status: draft&#10;lang: ja"></textarea>
@@ -411,8 +419,8 @@
                   <span class="table-head-state">使用</span>
                 </div>
 
-                <label class="setting-row">
-                  <span class="setting-name">自動コピー</span>
+                <label class="setting-row" data-pro>
+                  <span class="setting-name">自動コピー <span class="pro-badge">PRO</span></span>
                   <span class="setting-desc">変換完了時にクリップボードへ自動コピーします。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="autoCopy">

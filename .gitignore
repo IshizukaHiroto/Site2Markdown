@@ -30,3 +30,8 @@ coverage/
 # Chrome extension packaging artifacts
 *.crx
 *.pem
+*.zip
+
+# Internal planning documents (not for public)
+docs/
+仕様書.md
