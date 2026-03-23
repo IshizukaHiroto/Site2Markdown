@@ -25,6 +25,9 @@
 
   /* Ambient shadow base */
   --shadow-color: rgba(27, 28, 25, 0.05);
+
+  /* Paper — used for SVG knockout fills */
+  --paper: var(--surface-float);
 }
 
 * {
