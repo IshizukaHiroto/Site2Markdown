@@ -22,5 +22,8 @@
     "clipboardWrite",
     "downloads",
     "scripting"
+  ],
+  "host_permissions": [
+    "https://www.google-analytics.com/*"
   ]
 }

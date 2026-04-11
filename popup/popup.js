@@ -2,8 +2,10 @@
  * Site2Markdown - Popup Script
  */
 
-const FEEDBACK_URL = 'https://forms.gle/XrBjeDDyKa5GLVJg9';
-const UPGRADE_URL  = 'https://forms.gle/XrBjeDDyKa5GLVJg9'; // Pro waitlist (ExtensionPay に切り替え予定)
+const FEEDBACK_URL = 'https://forms.gle/88hU94xJCZkbjaNx5';
+const UPGRADE_URL  = 'https://site2markdown.polarphos.com'; // v1.1 で ExtensionPay に切り替え予定
+
+const FREE_DAILY_LIMIT = 5;
 
 const FREE_OVERRIDES = {
   selectionOnly:     false,
@@ -64,6 +66,9 @@ const I18N = {
     feedbackLabel:  'フィードバックを送る',
     settingsLabel:  '設定を開く',
     langNext:       'English',
+    limitReached:   `今日の無料枠（${FREE_DAILY_LIMIT}サイト）を使い切りました`,
+    limitHint:      'Pro版を購入すると無制限に使えます',
+    usageCount:     (n) => `今日 ${n}/${FREE_DAILY_LIMIT} 使用済み · `,
   },
   en: {
     loading:        'Loading...',
@@ -86,6 +91,9 @@ const I18N = {
     feedbackLabel:  'Send feedback',
     settingsLabel:  'Open settings',
     langNext:       '日本語',
+    limitReached:   `You've reached today's free limit (${FREE_DAILY_LIMIT} sites)`,
+    limitHint:      'Purchase Pro for unlimited conversions',
+    usageCount:     (n) => `Today ${n}/${FREE_DAILY_LIMIT} used · `,
   },
 };
 
@@ -212,6 +220,29 @@ function setPropertyValues(tab) {
   document.getElementById('prop-date-value').textContent  = today;
 }
 
+// ── Daily usage（無料プランの1日5回制限） ─────────────────────────────────────
+
+function _today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+async function getDailyCount() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get({ dailyUsage: { date: '', count: 0 } }, (result) => {
+      resolve(result.dailyUsage.date === _today() ? result.dailyUsage.count : 0);
+    });
+  });
+}
+
+async function incrementDailyCount() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get({ dailyUsage: { date: '', count: 0 } }, (result) => {
+      const current = result.dailyUsage.date === _today() ? result.dailyUsage.count : 0;
+      chrome.storage.local.set({ dailyUsage: { date: _today(), count: current + 1 } }, resolve);
+    });
+  });
+}
+
 // ── Conversion ────────────────────────────────────────────────────────────────
 
 async function requestConversion(tabId, settings) {
@@ -299,11 +330,30 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!isPro) {
     settings = Object.assign({}, settings, FREE_OVERRIDES);
     document.getElementById('upgrade-bar').hidden = false;
+    trackEvent('pro_gate_shown');
   }
 
   setPageInfo(tab);
   setPropertyValues(tab);
   applyPropertyVisibility(settings);
+
+  // 無料プランの日次上限チェック
+  if (!isPro) {
+    const dailyCount = await getDailyCount();
+    if (dailyCount >= FREE_DAILY_LIMIT) {
+      const textarea = document.getElementById('markdownOutput');
+      textarea.placeholder = `${currentT.limitReached}\n${currentT.limitHint}`;
+      document.getElementById('upgrade-text').textContent = currentT.limitReached;
+      showStatus(currentT.limitReached, true);
+      trackEvent('daily_limit_reached');
+      return;
+    }
+    // カウントをアップグレードバーに表示
+    if (dailyCount > 0) {
+      const upgradeTextEl = document.getElementById('upgrade-text');
+      upgradeTextEl.textContent = currentT.usageCount(dailyCount) + currentT.upgradeText;
+    }
+  }
 
   const contentWrapper = document.getElementById('content-wrapper');
   contentWrapper.classList.add('is-loading');
@@ -322,6 +372,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('markdownOutput').value = markdown;
   updateCharCount(markdown);
   setButtonsEnabled(true);
+  trackEvent('popup_open');
+  trackEvent('convert', { is_pro: isPro });
+
+  // 変換成功後にカウントをインクリメント
+  if (!isPro) await incrementDailyCount();
 
   // 自動コピー（Pro のみ）
   if (settings.autoCopy) {
@@ -337,6 +392,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       await navigator.clipboard.writeText(text);
       showStatus(currentT.copied);
+      trackEvent('copy');
     } catch {
       showStatus(currentT.copyFailed, true);
     }
@@ -362,6 +418,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
       showStatus(currentT.saved);
+      trackEvent('save', { save_as: saveAs });
       chrome.downloads.onChanged.addListener(function onChanged(delta) {
         if (delta.id === downloadId && delta.state?.current === 'complete') {
           URL.revokeObjectURL(downloadUrl);
@@ -418,5 +475,6 @@ document.getElementById('feedbackBtn').addEventListener('click', () => {
 });
 
 document.getElementById('upgradeBtn').addEventListener('click', () => {
+  trackEvent('upgrade_clicked', { source: 'popup' });
   chrome.tabs.create({ url: UPGRADE_URL });
 });

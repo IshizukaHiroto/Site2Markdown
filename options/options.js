@@ -2,7 +2,7 @@
  * Site2Markdown - Options Script
  */
 
-const UPGRADE_URL = 'https://forms.gle/XrBjeDDyKa5GLVJg9';
+const UPGRADE_URL = 'https://site2markdown.polarphos.com'; // v1.1 で ExtensionPay に切り替え予定
 
 const DEFAULT_SETTINGS = {
   removeAds:               false,
@@ -562,6 +562,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const upgradeBtn = document.getElementById('upgradeBtn');
   if (upgradeBtn) {
     upgradeBtn.addEventListener('click', () => {
+      trackEvent('upgrade_clicked', { source: 'options' });
       chrome.tabs.create({ url: UPGRADE_URL });
     });
   }

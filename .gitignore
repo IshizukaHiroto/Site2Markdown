@@ -21,6 +21,9 @@ pnpm-debug.log*
 .env
 .env.*
 
+# Generated files (build.js で生成される)
+lib/analytics.js
+
 # Build and test outputs
 dist/
 build/
