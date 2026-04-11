@@ -2,19 +2,6 @@
  * Site2Markdown - Popup Script
  */
 
-const FEEDBACK_URL = 'https://forms.gle/88hU94xJCZkbjaNx5';
-const UPGRADE_URL  = 'https://site2markdown.polarphos.com'; // v1.1 で ExtensionPay に切り替え予定
-
-const FREE_DAILY_LIMIT = 5;
-
-const FREE_OVERRIDES = {
-  selectionOnly:     false,
-  frontmatterCustom: '',
-  headingShift:      0,
-  linkHandling:      'keep',
-  autoCopy:          false,
-};
-
 const DEFAULT_SETTINGS = {
   removeAds:               false,
   removeHeader:            true,
@@ -42,109 +29,23 @@ const DEFAULT_SETTINGS = {
   autoCopy:                false,
 };
 
-// ── i18n ──────────────────────────────────────────────────────────────────────
+// ── 文字列定数 ─────────────────────────────────────────────────────────────────
 
-const I18N = {
-  ja: {
-    loading:        '読み込み中...',
-    converting:     '変換中...',
-    properties:     'プロパティ',
-    preview:        'Markdown',
-    copy:           'コピー',
-    save:           '保存',
-    saveAs:         '名前をつけて保存',
-    copied:         'コピーしました',
-    saved:          '保存しました',
-    autoCopied:     '自動コピーしました',
-    copyFailed:     'コピーに失敗しました',
-    saveFailed:     '保存に失敗しました',
-    convFailed:     '変換に失敗しました',
-    restricted:     'このページでは実行できません',
-    upgradeText:    '有料版でさらに便利に',
-    upgradeBtn:     'アップグレード — $9',
-    untitled:       '(無題)',
-    feedbackLabel:  'フィードバックを送る',
-    settingsLabel:  '設定を開く',
-    langNext:       'English',
-    limitReached:   `今日の無料枠（${FREE_DAILY_LIMIT}サイト）を使い切りました`,
-    limitHint:      '有料版を購入すると無制限に使えます',
-    usageCount:     (n) => `今日 ${n}/${FREE_DAILY_LIMIT} 使用済み · `,
-  },
-  en: {
-    loading:        'Loading...',
-    converting:     'Converting...',
-    properties:     'Properties',
-    preview:        'Markdown',
-    copy:           'Copy',
-    save:           'Save',
-    saveAs:         'Save As...',
-    copied:         'Copied',
-    saved:          'Saved',
-    autoCopied:     'Auto-copied',
-    copyFailed:     'Copy failed',
-    saveFailed:     'Save failed',
-    convFailed:     'Conversion failed',
-    restricted:     'Cannot run on this page',
-    upgradeText:    'Unlock paid features',
-    upgradeBtn:     'Upgrade — $9',
-    untitled:       '(Untitled)',
-    feedbackLabel:  'Send feedback',
-    settingsLabel:  'Open settings',
-    langNext:       '日本語',
-    limitReached:   `You've reached today's free limit (${FREE_DAILY_LIMIT} sites)`,
-    limitHint:      'Purchase paid plan for unlimited conversions',
-    usageCount:     (n) => `Today ${n}/${FREE_DAILY_LIMIT} used · `,
-  },
+const T = {
+  untitled:    '(無題)',
+  autoCopied:  '自動コピーしました',
+  copied:      'コピーしました',
+  copyFailed:  'コピーに失敗しました',
+  saved:       '保存しました',
+  saveFailed:  '保存に失敗しました',
+  convFailed:  '変換に失敗しました',
+  restricted:  'このページでは実行できません',
 };
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
 let currentTitle = 'untitled';
 let downloadUrl  = null;
-let currentLang  = 'ja';
-let currentT     = I18N.ja;
-
-// ── Language ──────────────────────────────────────────────────────────────────
-
-function applyLanguage(lang) {
-  currentLang = lang;
-  currentT    = I18N[lang];
-  document.documentElement.lang = lang;
-
-  document.getElementById('prop-section-title').textContent    = currentT.properties;
-  document.getElementById('content-title-text').textContent    = currentT.preview;
-  document.getElementById('copy-label').textContent            = currentT.copy;
-  document.getElementById('save-label').textContent            = currentT.save;
-  document.getElementById('saveAsBtn').textContent             = currentT.saveAs;
-  document.getElementById('upgrade-text').textContent          = currentT.upgradeText;
-  document.getElementById('upgradeBtn').textContent            = currentT.upgradeBtn;
-  document.getElementById('langBtn').textContent               = lang === 'ja' ? 'EN' : 'JP';
-  document.getElementById('langBtn').title                     = currentT.langNext;
-  document.getElementById('feedbackBtn').setAttribute('aria-label', currentT.feedbackLabel);
-  document.getElementById('feedbackBtn').title                 = currentT.feedbackLabel;
-  document.getElementById('optionsBtn').setAttribute('aria-label', currentT.settingsLabel);
-  document.getElementById('optionsBtn').title                  = currentT.settingsLabel;
-
-  const textarea = document.getElementById('markdownOutput');
-  if (!textarea.value) textarea.placeholder = currentT.converting;
-
-  const pageTitle = document.getElementById('page-title');
-  if (pageTitle.dataset.i18nLoading !== undefined && !pageTitle.dataset.loaded) {
-    pageTitle.textContent = currentT.loading;
-  }
-}
-
-async function initLanguage() {
-  const { uiLanguage } = await new Promise(resolve =>
-    chrome.storage.sync.get({ uiLanguage: 'auto' }, resolve)
-  );
-  let lang = uiLanguage;
-  if (lang === 'auto') {
-    lang = navigator.language.startsWith('ja') ? 'ja' : 'en';
-  }
-  applyLanguage(lang);
-  return lang;
-}
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -158,8 +59,8 @@ function showStatus(msg, isError = false) {
 }
 
 function setButtonsEnabled(enabled) {
-  document.getElementById('copyBtn').disabled    = !enabled;
-  document.getElementById('saveBtn').disabled    = !enabled;
+  document.getElementById('copyBtn').disabled     = !enabled;
+  document.getElementById('saveBtn').disabled     = !enabled;
   document.getElementById('saveMenuBtn').disabled = !enabled;
 }
 
@@ -167,7 +68,7 @@ function updateCharCount(text) {
   const el = document.getElementById('char-count');
   if (!el) return;
   if (!text) { el.classList.remove('visible'); return; }
-  const chars = text.length;
+  const chars  = text.length;
   const tokens = Math.round(chars / 3.5);
   el.textContent = `${chars.toLocaleString()} chars · ~${tokens.toLocaleString()} tokens`;
   el.classList.add('visible');
@@ -175,7 +76,7 @@ function updateCharCount(text) {
 
 function setPageInfo(tab) {
   const titleEl = document.getElementById('page-title');
-  titleEl.textContent = tab.title || currentT.untitled;
+  titleEl.textContent = tab.title || T.untitled;
   delete titleEl.dataset.i18nLoading;
   titleEl.dataset.loaded = '1';
 
@@ -213,34 +114,11 @@ function applyPropertyVisibility(settings) {
 }
 
 function setPropertyValues(tab) {
-  document.getElementById('prop-title-value').textContent = tab.title || currentT.untitled;
+  document.getElementById('prop-title-value').textContent = tab.title || T.untitled;
   document.getElementById('prop-url-value').textContent   = tab.url || '';
   document.getElementById('prop-url-value').title         = tab.url || '';
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('prop-date-value').textContent  = today;
-}
-
-// ── Daily usage（無料プランの1日5回制限） ─────────────────────────────────────
-
-function _today() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-async function getDailyCount() {
-  return new Promise((resolve) => {
-    chrome.storage.local.get({ dailyUsage: { date: '', count: 0 } }, (result) => {
-      resolve(result.dailyUsage.date === _today() ? result.dailyUsage.count : 0);
-    });
-  });
-}
-
-async function incrementDailyCount() {
-  return new Promise((resolve) => {
-    chrome.storage.local.get({ dailyUsage: { date: '', count: 0 } }, (result) => {
-      const current = result.dailyUsage.date === _today() ? result.dailyUsage.count : 0;
-      chrome.storage.local.set({ dailyUsage: { date: _today(), count: current + 1 } }, resolve);
-    });
-  });
 }
 
 // ── Conversion ────────────────────────────────────────────────────────────────
@@ -259,15 +137,15 @@ async function requestConversion(tabId, settings) {
       },
       () => {
         if (chrome.runtime.lastError) {
-          resolve({ error: currentT.restricted });
+          resolve({ error: T.restricted });
           return;
         }
         chrome.tabs.sendMessage(tabId, { action: 'convert', settings }, (res) => {
           if (chrome.runtime.lastError) {
-            resolve({ error: currentT.convFailed });
+            resolve({ error: T.convFailed });
             return;
           }
-          resolve(res || { error: currentT.convFailed });
+          resolve(res || { error: T.convFailed });
         });
       }
     );
@@ -297,9 +175,9 @@ function buildFilename(title, settings) {
 // ── Properties toggle ─────────────────────────────────────────────────────────
 
 function initPropertiesToggle() {
-  const btn    = document.getElementById('properties-toggle');
-  const body   = document.getElementById('properties-body');
-  const arrow  = document.getElementById('toggle-arrow');
+  const btn     = document.getElementById('properties-toggle');
+  const body    = document.getElementById('properties-body');
+  const arrow   = document.getElementById('toggle-arrow');
   let collapsed = false;
 
   btn.addEventListener('click', () => {
@@ -315,45 +193,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   initPropertiesToggle();
   setButtonsEnabled(false);
 
-  // 言語 + 設定 + タブを並列取得
-  const [lang, storageResult, [tab]] = await Promise.all([
-    initLanguage(),
+  const [storageResult, [tab]] = await Promise.all([
     new Promise((resolve) =>
-      chrome.storage.sync.get({ ...DEFAULT_SETTINGS, isPro: false, uiLanguage: 'auto' }, resolve)
+      chrome.storage.sync.get({ ...DEFAULT_SETTINGS }, resolve)
     ),
     chrome.tabs.query({ active: true, currentWindow: true }),
   ]);
 
-  const isPro = storageResult.isPro;
-  let settings = storageResult;
-
-  if (!isPro) {
-    settings = Object.assign({}, settings, FREE_OVERRIDES);
-    document.getElementById('upgrade-bar').hidden = false;
-    trackEvent('pro_gate_shown');
-  }
+  const settings = storageResult;
 
   setPageInfo(tab);
   setPropertyValues(tab);
   applyPropertyVisibility(settings);
-
-  // 無料プランの日次上限チェック
-  if (!isPro) {
-    const dailyCount = await getDailyCount();
-    if (dailyCount >= FREE_DAILY_LIMIT) {
-      const textarea = document.getElementById('markdownOutput');
-      textarea.placeholder = `${currentT.limitReached}\n${currentT.limitHint}`;
-      document.getElementById('upgrade-text').textContent = currentT.limitReached;
-      showStatus(currentT.limitReached, true);
-      trackEvent('daily_limit_reached');
-      return;
-    }
-    // カウントをアップグレードバーに表示
-    if (dailyCount > 0) {
-      const upgradeTextEl = document.getElementById('upgrade-text');
-      upgradeTextEl.textContent = currentT.usageCount(dailyCount) + currentT.upgradeText;
-    }
-  }
 
   const contentWrapper = document.getElementById('content-wrapper');
   contentWrapper.classList.add('is-loading');
@@ -372,17 +223,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('markdownOutput').value = markdown;
   updateCharCount(markdown);
   setButtonsEnabled(true);
-  trackEvent('popup_open');
-  trackEvent('convert', { is_pro: isPro });
 
-  // 変換成功後にカウントをインクリメント
-  if (!isPro) await incrementDailyCount();
-
-  // 自動コピー（Pro のみ）
+  // 自動コピー
   if (settings.autoCopy) {
     try {
       await navigator.clipboard.writeText(markdown);
-      showStatus(currentT.autoCopied);
+      showStatus(T.autoCopied);
     } catch { /* silent */ }
   }
 
@@ -391,10 +237,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const text = document.getElementById('markdownOutput').value;
     try {
       await navigator.clipboard.writeText(text);
-      showStatus(currentT.copied);
-      trackEvent('copy');
+      showStatus(T.copied);
     } catch {
-      showStatus(currentT.copyFailed, true);
+      showStatus(T.copyFailed, true);
     }
   });
 
@@ -414,11 +259,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     chrome.downloads.download({ url: downloadUrl, filename, saveAs }, (downloadId) => {
       if (chrome.runtime.lastError) {
-        showStatus(currentT.saveFailed, true);
+        showStatus(T.saveFailed, true);
         return;
       }
-      showStatus(currentT.saved);
-      trackEvent('save', { save_as: saveAs });
+      showStatus(T.saved);
       chrome.downloads.onChanged.addListener(function onChanged(delta) {
         if (delta.id === downloadId && delta.state?.current === 'complete') {
           URL.revokeObjectURL(downloadUrl);
@@ -456,25 +300,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-// ── 言語切り替え ──────────────────────────────────────────────────────────────
-
-document.getElementById('langBtn').addEventListener('click', async () => {
-  const newLang = currentLang === 'ja' ? 'en' : 'ja';
-  await new Promise(resolve => chrome.storage.sync.set({ uiLanguage: newLang }, resolve));
-  applyLanguage(newLang);
-});
-
 // ── ヘッダーボタン ─────────────────────────────────────────────────────────────
 
 document.getElementById('optionsBtn').addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
-});
-
-document.getElementById('feedbackBtn').addEventListener('click', () => {
-  chrome.tabs.create({ url: FEEDBACK_URL });
-});
-
-document.getElementById('upgradeBtn').addEventListener('click', () => {
-  trackEvent('upgrade_clicked', { source: 'popup' });
-  chrome.tabs.create({ url: UPGRADE_URL });
 });

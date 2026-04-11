@@ -16,52 +16,43 @@
         <span class="brand-badge"><img src="../icons/icon48.png" alt="Site2Markdown" width="28" height="28"></span>
         <div class="topbar-copy">
           <p class="topbar-label">Site2Markdown</p>
-          <h1 data-i18n="topbarTitle">設定</h1>
+          <h1>設定</h1>
         </div>
       </div>
       <div class="topbar-right">
         <div class="topbar-meta">
           <p class="topbar-path">Chrome Extension / Preferences</p>
-          <p class="topbar-help" data-i18n="topbarSubtitle">変換の動作をカスタマイズします。</p>
+          <p class="topbar-help">変換の動作をカスタマイズします。</p>
         </div>
-        <button id="langBtn" class="lang-btn" aria-label="Switch language">EN</button>
       </div>
     </header>
 
     <div class="workspace">
       <aside class="sidebar">
         <section class="sidebar-block">
-          <p class="sidebar-heading" data-i18n="sidebarCat">カテゴリ</p>
+          <p class="sidebar-heading">カテゴリ</p>
           <nav class="side-nav" aria-label="設定カテゴリ" role="tablist">
             <button id="tab-cleanup" class="side-link is-active" type="button"
               role="tab" aria-selected="true" aria-controls="cleanupSection" data-target="cleanupSection">
-              <span class="side-num">01</span><span data-i18n="tabCleanup">本文の整え方</span>
+              <span class="side-num">01</span><span>本文の整え方</span>
             </button>
             <button id="tab-output" class="side-link" type="button"
               role="tab" aria-selected="false" aria-controls="outputSection" data-target="outputSection">
-              <span class="side-num">02</span><span data-i18n="tabOutput">出力形式</span>
+              <span class="side-num">02</span><span>出力形式</span>
             </button>
             <button id="tab-frontmatter" class="side-link" type="button"
               role="tab" aria-selected="false" aria-controls="frontmatterSection" data-target="frontmatterSection">
-              <span class="side-num">03</span><span data-i18n="tabFrontmatter">メタ情報</span>
+              <span class="side-num">03</span><span>メタ情報</span>
             </button>
             <button id="tab-filename" class="side-link" type="button"
               role="tab" aria-selected="false" aria-controls="filenameSection" data-target="filenameSection">
-              <span class="side-num">04</span><span data-i18n="tabFilename">ファイル名・動作</span>
+              <span class="side-num">04</span><span>ファイル名・動作</span>
             </button>
             <button id="tab-preview" class="side-link" type="button"
               role="tab" aria-selected="false" aria-controls="previewSection" data-target="previewSection">
-              <span class="side-num">05</span><span data-i18n="tabPreview">出力例</span>
+              <span class="side-num">05</span><span>出力例</span>
             </button>
           </nav>
-        </section>
-
-        <section class="sidebar-block" id="upgrade-section">
-          <div class="upgrade-card">
-            <p class="upgrade-card-title" data-i18n="upgradeTitle">Pro にアップグレード</p>
-            <p class="upgrade-card-desc" data-i18n="upgradeDesc">選択範囲変換・リンク除去・見出しシフト・カスタムフィールド・自動コピーが使えます。</p>
-            <button id="upgradeBtn" class="btn-upgrade-sidebar" data-i18n="upgradeBtn">アップグレード — $9</button>
-          </div>
         </section>
       </aside>
 
@@ -71,83 +62,83 @@
         <section id="cleanupSection" class="panel is-active" role="tabpanel" aria-labelledby="tab-cleanup">
           <div class="panel-header">
             <div>
-              <p class="panel-kicker" data-i18n="panelCleanupKicker">本文整理</p>
-              <h2 data-i18n="panelCleanupTitle">本文の整え方</h2>
+              <p class="panel-kicker">本文整理</p>
+              <h2>本文の整え方</h2>
             </div>
-            <p class="panel-desc" data-i18n="panelCleanupDesc">取得方法と除去する要素を指定します。</p>
+            <p class="panel-desc">取得方法と除去する要素を指定します。</p>
           </div>
 
           <div class="panel-body">
             <div class="setting-table" role="presentation">
               <div class="table-head" aria-hidden="true">
-                <span data-i18n="colItem">項目</span>
-                <span data-i18n="colDesc">説明</span>
-                <span class="table-head-state" data-i18n="colSetting">設定</span>
+                <span>項目</span>
+                <span>説明</span>
+                <span class="table-head-state">設定</span>
               </div>
 
               <label class="setting-row setting-row-ctrl">
-                <span class="setting-name" data-i18n="settingExtractionName">コンテンツ抽出</span>
-                <span class="setting-desc" data-i18n="settingExtractionDesc">Readability は記事本文を自動抽出、body はページ全体を変換します。</span>
+                <span class="setting-name">コンテンツ抽出</span>
+                <span class="setting-desc">Readability は記事本文を自動抽出、body はページ全体を変換します。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="extractionMode">
-                    <option value="readability" data-i18n="optExtractionReadability">Readability（推奨）</option>
-                    <option value="body" data-i18n="optExtractionBody">ページ全体（body）</option>
+                    <option value="readability">Readability（推奨）</option>
+                    <option value="body">ページ全体（body）</option>
                   </select>
                 </span>
               </label>
 
-              <label class="setting-row" data-pro>
-                <span class="setting-name"><span data-i18n="settingSelectionName">選択範囲のみ変換</span> <span class="pro-badge">PRO</span></span>
-                <span class="setting-desc" data-i18n="settingSelectionDesc">選択中のテキストのみを変換します。</span>
+              <label class="setting-row">
+                <span class="setting-name">選択範囲のみ変換</span>
+                <span class="setting-desc">選択中のテキストのみを変換します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="selectionOnly">
                 </span>
               </label>
             </div>
 
-            <div class="setting-group-head" data-i18n="groupRemove">除去オプション</div>
+            <div class="setting-group-head">除去オプション</div>
             <div class="setting-table" role="presentation">
               <div class="table-head" aria-hidden="true">
-                <span data-i18n="colItem">項目</span>
-                <span data-i18n="colDesc">説明</span>
-                <span class="table-head-state" data-i18n="colUse">使用</span>
+                <span>項目</span>
+                <span>説明</span>
+                <span class="table-head-state">使用</span>
               </div>
 
               <label class="setting-row">
-                <span class="setting-name" data-i18n="settingRemoveAdsName">広告を除去</span>
-                <span class="setting-desc" data-i18n="settingRemoveAdsDesc">広告ブロックを出力から除去します。</span>
+                <span class="setting-name">広告を除去</span>
+                <span class="setting-desc">広告ブロックを出力から除去します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="removeAds">
                 </span>
               </label>
 
               <label class="setting-row">
-                <span class="setting-name" data-i18n="settingRemoveHeaderName">ヘッダーを除去</span>
-                <span class="setting-desc" data-i18n="settingRemoveHeaderDesc">ロゴや上部ナビを除去します。</span>
+                <span class="setting-name">ヘッダーを除去</span>
+                <span class="setting-desc">ロゴや上部ナビを除去します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="removeHeader">
                 </span>
               </label>
 
               <label class="setting-row">
-                <span class="setting-name" data-i18n="settingRemoveFooterName">フッターを除去</span>
-                <span class="setting-desc" data-i18n="settingRemoveFooterDesc">末尾の補助情報を除去します。</span>
+                <span class="setting-name">フッターを除去</span>
+                <span class="setting-desc">末尾の補助情報を除去します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="removeFooter">
                 </span>
               </label>
 
               <label class="setting-row">
-                <span class="setting-name" data-i18n="settingRemoveNavName">ナビゲーションバーを除去</span>
-                <span class="setting-desc" data-i18n="settingRemoveNavDesc">メニューやパンくずを除去します。</span>
+                <span class="setting-name">ナビゲーションバーを除去</span>
+                <span class="setting-desc">メニューやパンくずを除去します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="removeNav">
                 </span>
               </label>
 
               <label class="setting-row">
-                <span class="setting-name" data-i18n="settingRemoveSidebarName">サイドバーを除去</span>
-                <span class="setting-desc" data-i18n="settingRemoveSidebarDesc">補助カラムを除去します。</span>
+                <span class="setting-name">サイドバーを除去</span>
+                <span class="setting-desc">補助カラムを除去します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="removeSidebar">
                 </span>
@@ -160,58 +151,58 @@
         <section id="outputSection" class="panel" role="tabpanel" aria-labelledby="tab-output" hidden>
           <div class="panel-header">
             <div>
-              <p class="panel-kicker" data-i18n="panelOutputKicker">Output</p>
-              <h2 data-i18n="panelOutputTitle">Markdown の出力形式</h2>
+              <p class="panel-kicker">Output</p>
+              <h2>Markdown の出力形式</h2>
             </div>
-            <p class="panel-desc" data-i18n="panelOutputDesc">変換後の Markdown 構造を調整します。</p>
+            <p class="panel-desc">変換後の Markdown 構造を調整します。</p>
           </div>
 
           <div class="panel-body">
             <div class="setting-table" role="presentation">
               <div class="table-head" aria-hidden="true">
-                <span data-i18n="colItem">項目</span>
-                <span data-i18n="colDesc">説明</span>
-                <span class="table-head-state" data-i18n="colSetting">設定</span>
+                <span>項目</span>
+                <span>説明</span>
+                <span class="table-head-state">設定</span>
               </div>
 
               <label class="setting-row setting-row-ctrl">
-                <span class="setting-name" data-i18n="settingImageName">画像の扱い</span>
-                <span class="setting-desc" data-i18n="settingImageDesc">保持 / alt テキストのみ / 除去を選択します。</span>
+                <span class="setting-name">画像の扱い</span>
+                <span class="setting-desc">保持 / alt テキストのみ / 除去を選択します。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="imageHandling">
-                    <option value="keep" data-i18n="optImageKeep">そのまま保持</option>
-                    <option value="altOnly" data-i18n="optImageAltOnly">alt テキストのみ</option>
-                    <option value="remove" data-i18n="optImageRemove">完全に除去</option>
+                    <option value="keep">そのまま保持</option>
+                    <option value="altOnly">alt テキストのみ</option>
+                    <option value="remove">完全に除去</option>
                   </select>
                 </span>
               </label>
 
-              <label class="setting-row setting-row-ctrl" data-pro>
-                <span class="setting-name"><span data-i18n="settingLinkName">リンクの扱い</span> <span class="pro-badge">PRO</span></span>
-                <span class="setting-desc" data-i18n="settingLinkDesc">リンクを保持するか、テキストのみにするかを選択します。</span>
+              <label class="setting-row setting-row-ctrl">
+                <span class="setting-name">リンクの扱い</span>
+                <span class="setting-desc">リンクを保持するか、テキストのみにするかを選択します。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="linkHandling">
-                    <option value="keep" data-i18n="optLinkKeep">リンクを保持</option>
-                    <option value="textOnly" data-i18n="optLinkTextOnly">テキストのみ（URL 除去）</option>
+                    <option value="keep">リンクを保持</option>
+                    <option value="textOnly">テキストのみ（URL 除去）</option>
                   </select>
                 </span>
               </label>
 
-              <label class="setting-row setting-row-ctrl" data-pro>
-                <span class="setting-name"><span data-i18n="settingHeadingName">見出しレベルのシフト</span> <span class="pro-badge">PRO</span></span>
-                <span class="setting-desc" data-i18n="settingHeadingDesc">他の文書に組み込む際、h1 の重複を防げます。</span>
+              <label class="setting-row setting-row-ctrl">
+                <span class="setting-name">見出しレベルのシフト</span>
+                <span class="setting-desc">他の文書に組み込む際、h1 の重複を防げます。</span>
                 <span class="setting-control">
                   <select class="setting-select" id="headingShift">
-                    <option value="0" data-i18n="optHeading0">シフトなし</option>
-                    <option value="1" data-i18n="optHeading1">1 段下げる（h1 → h2）</option>
-                    <option value="2" data-i18n="optHeading2">2 段下げる（h1 → h3）</option>
+                    <option value="0">シフトなし</option>
+                    <option value="1">1 段下げる（h1 → h2）</option>
+                    <option value="2">2 段下げる（h1 → h3）</option>
                   </select>
                 </span>
               </label>
 
               <label class="setting-row">
-                <span class="setting-name" data-i18n="settingCollapseName">空行を圧縮</span>
-                <span class="setting-desc" data-i18n="settingCollapseDesc">3行以上の連続空行を2行に圧縮します。</span>
+                <span class="setting-name">空行を圧縮</span>
+                <span class="setting-desc">3行以上の連続空行を2行に圧縮します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="collapseBlankLines">
                 </span>
@@ -224,50 +215,50 @@
         <section id="frontmatterSection" class="panel" role="tabpanel" aria-labelledby="tab-frontmatter" hidden>
           <div class="panel-header">
             <div>
-              <p class="panel-kicker" data-i18n="panelFrontmatterKicker">Frontmatter</p>
-              <h2 data-i18n="panelFrontmatterTitle">メタ情報</h2>
+              <p class="panel-kicker">Frontmatter</p>
+              <h2>メタ情報</h2>
             </div>
-            <p class="panel-desc" data-i18n="panelFrontmatterDesc">先頭に付与する YAML フロントマターを設定します。</p>
+            <p class="panel-desc">先頭に付与する YAML フロントマターを設定します。</p>
           </div>
 
           <div class="panel-body">
             <div class="setting-table" role="presentation">
               <div class="table-head" aria-hidden="true">
-                <span data-i18n="colItem">項目</span>
-                <span data-i18n="colDesc">説明</span>
-                <span class="table-head-state" data-i18n="colUse">使用</span>
+                <span>項目</span>
+                <span>説明</span>
+                <span class="table-head-state">使用</span>
               </div>
 
               <label class="setting-row">
-                <span class="setting-name" data-i18n="settingFmEnableName">フロントマターを付与する</span>
-                <span class="setting-desc" data-i18n="settingFmEnableDesc">ページ情報を YAML で先頭に追加します。</span>
+                <span class="setting-name">フロントマターを付与する</span>
+                <span class="setting-desc">ページ情報を YAML で先頭に追加します。</span>
                 <span class="setting-control">
                   <input class="setting-checkbox" type="checkbox" id="frontmatterEnabled">
                 </span>
               </label>
             </div>
 
-            <p id="frontmatterHint" class="panel-hint" data-i18n="fmHint" hidden>フロントマターを ON にすると、含める項目を下の表から選べます。</p>
+            <p id="frontmatterHint" class="panel-hint" hidden>フロントマターを ON にすると、含める項目を下の表から選べます。</p>
 
             <div id="frontmatterFields" class="sub-panel">
               <div class="sub-panel-header">
-                <p class="sub-panel-title" data-i18n="fmSubTitle">frontmatter に含める項目</p>
-                <p class="sub-panel-desc" data-i18n="fmSubDesc">含める項目を選択します。</p>
+                <p class="sub-panel-title">frontmatter に含める項目</p>
+                <p class="sub-panel-desc">含める項目を選択します。</p>
               </div>
 
               <div class="setting-table setting-table-sub" role="presentation">
                 <div class="table-head" aria-hidden="true">
-                  <span data-i18n="colItem">項目</span>
-                  <span data-i18n="colDesc">説明</span>
-                  <span class="table-head-state" data-i18n="colUse">使用</span>
+                  <span>項目</span>
+                  <span>説明</span>
+                  <span class="table-head-state">使用</span>
                 </div>
 
                 <label class="setting-row">
                   <span class="setting-name">
-                    <span data-i18n="settingFmTitleName">タイトル</span>
+                    <span>タイトル</span>
                     <code class="setting-token">title</code>
                   </span>
-                  <span class="setting-desc" data-i18n="settingFmTitleDesc">ページのタイトルを付与します。</span>
+                  <span class="setting-desc">ページのタイトルを付与します。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="frontmatterTitle">
                   </span>
@@ -275,10 +266,10 @@
 
                 <label class="setting-row">
                   <span class="setting-name">
-                    <span data-i18n="settingFmUrlName">URL</span>
+                    <span>URL</span>
                     <code class="setting-token">url</code>
                   </span>
-                  <span class="setting-desc" data-i18n="settingFmUrlDesc">変換元ページの URL を付与します。</span>
+                  <span class="setting-desc">変換元ページの URL を付与します。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="frontmatterUrl">
                   </span>
@@ -286,10 +277,10 @@
 
                 <label class="setting-row">
                   <span class="setting-name">
-                    <span data-i18n="settingFmDateName">日付</span>
+                    <span>日付</span>
                     <code class="setting-token">date</code>
                   </span>
-                  <span class="setting-desc" data-i18n="settingFmDateDesc">保存した日付を付与します。</span>
+                  <span class="setting-desc">保存した日付を付与します。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="frontmatterDate">
                   </span>
@@ -297,10 +288,10 @@
 
                 <label class="setting-row">
                   <span class="setting-name">
-                    <span data-i18n="settingFmDescName">概要</span>
+                    <span>概要</span>
                     <code class="setting-token">description</code>
                   </span>
-                  <span class="setting-desc" data-i18n="settingFmDescDesc">meta description / og:description を付与します。</span>
+                  <span class="setting-desc">meta description / og:description を付与します。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="frontmatterDescription">
                   </span>
@@ -308,10 +299,10 @@
 
                 <label class="setting-row">
                   <span class="setting-name">
-                    <span data-i18n="settingFmAuthorName">著者</span>
+                    <span>著者</span>
                     <code class="setting-token">author</code>
                   </span>
-                  <span class="setting-desc" data-i18n="settingFmAuthorDesc">meta author から著者名を付与します。</span>
+                  <span class="setting-desc">meta author から著者名を付与します。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="frontmatterAuthor">
                   </span>
@@ -319,10 +310,10 @@
 
                 <label class="setting-row">
                   <span class="setting-name">
-                    <span data-i18n="settingFmTagsName">タグ</span>
+                    <span>タグ</span>
                     <code class="setting-token">tags</code>
                   </span>
-                  <span class="setting-desc" data-i18n="settingFmTagsDesc">固定タグを全変換に付与します。</span>
+                  <span class="setting-desc">固定タグを全変換に付与します。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="frontmatterTags">
                   </span>
@@ -330,16 +321,14 @@
               </div>
 
               <div class="setting-row-full" id="tagsValueRow" hidden>
-                <label class="setting-name" for="frontmatterTagsValue" data-i18n="tagsValueLabel">タグの値（カンマ区切り）</label>
+                <label class="setting-name" for="frontmatterTagsValue">タグの値（カンマ区切り）</label>
                 <input class="setting-input-text" type="text" id="frontmatterTagsValue"
                        placeholder="AI, research, notes">
               </div>
 
-              <div class="setting-row-full" data-pro>
-                <label class="setting-name" for="frontmatterCustom">
-                  <span data-i18n="fmCustomName">カスタムフィールド</span> <span class="pro-badge">PRO</span>
-                </label>
-                <span class="setting-desc" data-i18n="fmCustomDesc">YAML 形式で入力（複数行可）。</span>
+              <div class="setting-row-full">
+                <label class="setting-name" for="frontmatterCustom">カスタムフィールド</label>
+                <span class="setting-desc">YAML 形式で入力（複数行可）。</span>
                 <textarea class="setting-textarea" id="frontmatterCustom" rows="3"
                           placeholder="source: 参照先名&#10;status: draft&#10;lang: ja"></textarea>
               </div>
@@ -351,51 +340,51 @@
         <section id="filenameSection" class="panel" role="tabpanel" aria-labelledby="tab-filename" hidden>
           <div class="panel-header">
             <div>
-              <p class="panel-kicker" data-i18n="panelFilenameKicker">File &amp; Behavior</p>
-              <h2 data-i18n="panelFilenameTitle">ファイル名・動作</h2>
+              <p class="panel-kicker">File &amp; Behavior</p>
+              <h2>ファイル名・動作</h2>
             </div>
-            <p class="panel-desc" data-i18n="panelFilenameDesc">ファイル名フォーマットと自動動作を設定します。</p>
+            <p class="panel-desc">ファイル名フォーマットと自動動作を設定します。</p>
           </div>
 
           <div class="panel-body">
             <div class="sub-panel" style="margin: 16px 20px 0">
               <div class="sub-panel-header">
-                <p class="sub-panel-title" data-i18n="fnFormatTitle">ファイル名のフォーマット</p>
-                <p class="sub-panel-desc" data-i18n="fnFormatDesc">出力ファイル名のルールを設定します。</p>
+                <p class="sub-panel-title">ファイル名のフォーマット</p>
+                <p class="sub-panel-desc">出力ファイル名のルールを設定します。</p>
               </div>
               <div class="setting-table" role="presentation">
                 <div class="table-head" aria-hidden="true">
-                  <span data-i18n="colItem">項目</span>
-                  <span data-i18n="colDesc">説明</span>
-                  <span class="table-head-state" data-i18n="colSetting">設定</span>
+                  <span>項目</span>
+                  <span>説明</span>
+                  <span class="table-head-state">設定</span>
                 </div>
 
                 <label class="setting-row setting-row-ctrl">
-                  <span class="setting-name" data-i18n="settingFnDateName">日付フォーマット</span>
-                  <span class="setting-desc" data-i18n="settingFnDateDesc">先頭に付与する日付形式。</span>
+                  <span class="setting-name">日付フォーマット</span>
+                  <span class="setting-desc">先頭に付与する日付形式。</span>
                   <span class="setting-control">
                     <select class="setting-select" id="filenameDateFormat">
-                      <option value="YYYY-MM-DD" data-i18n="optFnDateYyyyMmDd">YYYY-MM-DD（例: 2026-03-19）</option>
-                      <option value="YYYYMMDD" data-i18n="optFnDateYyyymmdd">YYYYMMDD（例: 20260319）</option>
-                      <option value="none" data-i18n="optFnDateNone">なし</option>
+                      <option value="YYYY-MM-DD">YYYY-MM-DD（例: 2026-03-19）</option>
+                      <option value="YYYYMMDD">YYYYMMDD（例: 20260319）</option>
+                      <option value="none">なし</option>
                     </select>
                   </span>
                 </label>
 
                 <label class="setting-row setting-row-ctrl">
-                  <span class="setting-name" data-i18n="settingFnSepName">区切り文字</span>
-                  <span class="setting-desc" data-i18n="settingFnSepDesc">日付とタイトルの区切り文字。</span>
+                  <span class="setting-name">区切り文字</span>
+                  <span class="setting-desc">日付とタイトルの区切り文字。</span>
                   <span class="setting-control">
                     <select class="setting-select" id="filenameSeparator">
-                      <option value="_" data-i18n="optFnSepUnderscore">アンダースコア（_）</option>
-                      <option value="-" data-i18n="optFnSepHyphen">ハイフン（-）</option>
+                      <option value="_">アンダースコア（_）</option>
+                      <option value="-">ハイフン（-）</option>
                     </select>
                   </span>
                 </label>
 
                 <label class="setting-row setting-row-ctrl">
-                  <span class="setting-name" data-i18n="settingFnMaxlenName">タイトル最大文字数</span>
-                  <span class="setting-desc" data-i18n="settingFnMaxlenDesc">タイトル部の最大文字数（10〜200）。</span>
+                  <span class="setting-name">タイトル最大文字数</span>
+                  <span class="setting-desc">タイトル部の最大文字数（10〜200）。</span>
                   <span class="setting-control">
                     <input class="setting-input-number" type="number" id="filenameTitleMaxLength"
                            min="10" max="200" step="5">
@@ -406,19 +395,19 @@
 
             <div class="sub-panel" style="margin: 16px 20px 18px">
               <div class="sub-panel-header">
-                <p class="sub-panel-title" data-i18n="fnBehaviorTitle">ポップアップの動作</p>
-                <p class="sub-panel-desc" data-i18n="fnBehaviorDesc">ポップアップを開いた際の自動動作。</p>
+                <p class="sub-panel-title">ポップアップの動作</p>
+                <p class="sub-panel-desc">ポップアップを開いた際の自動動作。</p>
               </div>
               <div class="setting-table" role="presentation">
                 <div class="table-head" aria-hidden="true">
-                  <span data-i18n="colItem">項目</span>
-                  <span data-i18n="colDesc">説明</span>
-                  <span class="table-head-state" data-i18n="colUse">使用</span>
+                  <span>項目</span>
+                  <span>説明</span>
+                  <span class="table-head-state">使用</span>
                 </div>
 
-                <label class="setting-row" data-pro>
-                  <span class="setting-name"><span data-i18n="settingAutoCopyName">自動コピー</span> <span class="pro-badge">PRO</span></span>
-                  <span class="setting-desc" data-i18n="settingAutoCopyDesc">変換完了時にクリップボードへ自動コピーします。</span>
+                <label class="setting-row">
+                  <span class="setting-name">自動コピー</span>
+                  <span class="setting-desc">変換完了時にクリップボードへ自動コピーします。</span>
                   <span class="setting-control">
                     <input class="setting-checkbox" type="checkbox" id="autoCopy">
                   </span>
@@ -432,16 +421,16 @@
         <section id="previewSection" class="panel" role="tabpanel" aria-labelledby="tab-preview" hidden>
           <div class="panel-header">
             <div>
-              <p class="panel-kicker" data-i18n="panelPreviewKicker">Preview</p>
-              <h2 data-i18n="panelPreviewTitle">現在の出力例</h2>
+              <p class="panel-kicker">Preview</p>
+              <h2>現在の出力例</h2>
             </div>
-            <p class="panel-desc" data-i18n="panelPreviewDesc">設定を変更すると即時反映されます。</p>
+            <p class="panel-desc">設定を変更すると即時反映されます。</p>
           </div>
 
           <div class="panel-body">
             <div class="preview-table" role="presentation">
               <div class="preview-row">
-                <span class="preview-label" data-i18n="previewFilenameLabel">保存されるファイル名</span>
+                <span class="preview-label">保存されるファイル名</span>
                 <code class="preview-code" id="filenamePreview">YYYY-MM-DD_ページタイトル（最大50文字）.md</code>
               </div>
             </div>
@@ -454,16 +443,15 @@
     <footer class="footer-bar">
       <div class="footer-copy">
         <span id="saveStatus" class="save-status" data-state="saved" aria-live="polite">保存済み</span>
-        <p class="footer-note" data-i18n="footerSynced">設定はブラウザに同期保存されます。</p>
+        <p class="footer-note">設定はブラウザに同期保存されます。</p>
       </div>
       <div class="footer-actions">
-        <button id="resetBtn" class="btn-reset" data-i18n="btnReset">デフォルトに戻す</button>
-        <button id="saveBtn" class="btn-save" disabled data-i18n="btnSave">変更を保存</button>
+        <button id="resetBtn" class="btn-reset">デフォルトに戻す</button>
+        <button id="saveBtn" class="btn-save" disabled>変更を保存</button>
       </div>
     </footer>
   </div>
 
-  <script src="../lib/analytics.js"></script>
   <script src="options.js"></script>
 </body>
 </html>

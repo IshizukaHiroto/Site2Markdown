@@ -17,13 +17,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Environment files
-.env
-.env.*
-
-# Generated files (build.js で生成される)
-lib/analytics.js
-
 # Build and test outputs
 dist/
 build/
@@ -34,7 +27,3 @@ coverage/
 *.crx
 *.pem
 *.zip
-
-# Internal planning documents (not for public)
-docs/
-仕様書.md
