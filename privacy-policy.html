@@ -237,7 +237,7 @@
       <p>本プライバシーポリシーは必要に応じて更新する場合があります。重要な変更がある場合は、拡張機能のアップデートノートに記載します。</p>
 
       <h2>お問い合わせ</h2>
-      <p>本プライバシーポリシーに関するご質問は、<a href="https://forms.gle/XrBjeDDyKa5GLVJg9" target="_blank" rel="noopener">こちらのフォーム</a>よりお問い合わせください。</p>
+      <p>本プライバシーポリシーに関するご質問は、<a href="https://forms.gle/88hU94xJCZkbjaNx5" target="_blank" rel="noopener">こちらのフォーム</a>よりお問い合わせください。</p>
 
     </div>
 
@@ -247,26 +247,23 @@
       <header>
         <p class="app-name">Site2Markdown — Chrome Extension</p>
         <h1>Privacy Policy</h1>
-        <p class="meta">Last updated: March 21, 2026</p>
+        <p class="meta">Last updated: April 12, 2026</p>
       </header>
 
       <h2>Overview</h2>
       <p>Site2Markdown is a Chrome extension that converts web pages to Markdown format.</p>
       <div class="highlight-box">
-        Site2Markdown does not collect, store, or transmit any personal data to external servers. All processing happens locally within your browser.
+        Site2Markdown does not collect page content or personally identifiable information. We collect anonymous usage statistics to improve the extension.
       </div>
 
       <h2>Information We Handle</h2>
 
-      <h3>Information We Store (Settings Only)</h3>
-      <p>The extension saves the following user-configured settings to <code>chrome.storage.sync</code>, which syncs across your devices via your Chrome account. This data is never sent to any external server.</p>
+      <h3>Information We Store</h3>
+      <p>The following data is stored locally in your browser. None of this is sent to our servers.</p>
       <ul>
-        <li>Cleanup options (remove ads, headers, footers, navigation, sidebars)</li>
-        <li>Image and link handling preferences</li>
-        <li>Heading level shift setting</li>
-        <li>Frontmatter field configuration (title, URL, date, tags, etc.)</li>
-        <li>Filename format settings</li>
-        <li>Other conversion options</li>
+        <li><strong>Conversion settings</strong> (<code>chrome.storage.sync</code>) — Cleanup options, frontmatter configuration, filename format, etc. Synced across your devices via your Chrome account.</li>
+        <li><strong>Daily usage count</strong> (<code>chrome.storage.local</code>) — To enforce the free plan's 5-site-per-day limit, we store today's date and conversion count locally. This resets automatically each day.</li>
+        <li><strong>Analytics client ID</strong> (<code>chrome.storage.local</code>) — A randomly generated UUID used to aggregate usage statistics. It does not identify you personally.</li>
       </ul>
 
       <h3>Information We Never Collect</h3>
@@ -277,6 +274,17 @@
         <li>Clipboard contents</li>
         <li>Downloaded file contents</li>
       </ul>
+
+      <h2>Analytics</h2>
+      <p>We use Google Analytics 4 (GA4) to collect anonymous usage statistics for the purpose of improving the extension.</p>
+      <h3>Events We Send</h3>
+      <ul>
+        <li>Popup opened / conversion performed</li>
+        <li>Copy or Save button clicked</li>
+        <li>Upgrade button clicked</li>
+        <li>Free plan daily limit reached</li>
+      </ul>
+      <p>These events do not include page content or URLs. Only the event type and an anonymous client ID are transmitted. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a> for details.</p>
 
       <h2>How We Access Page Content</h2>
       <p>The extension reads the current page content <strong>only when you click the extension icon</strong>. The content is converted to Markdown entirely within your browser and displayed in the popup.</p>
@@ -319,7 +327,7 @@
       <p>We may update this Privacy Policy from time to time. Material changes will be noted in the extension's update release notes.</p>
 
       <h2>Contact</h2>
-      <p>For questions about this Privacy Policy, please use <a href="https://forms.gle/XrBjeDDyKa5GLVJg9" target="_blank" rel="noopener">this contact form</a>.</p>
+      <p>For questions about this Privacy Policy, please use <a href="https://forms.gle/88hU94xJCZkbjaNx5" target="_blank" rel="noopener">this contact form</a>.</p>
 
     </div>
 
