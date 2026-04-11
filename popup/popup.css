@@ -36,6 +36,8 @@
   padding: 0;
 }
 
+[hidden] { display: none !important; }
+
 html {
   width: 400px;
   height: 560px;
@@ -346,7 +348,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 #content-wrapper::after {
@@ -577,12 +579,16 @@ body {
 #markdownPreview {
   flex: 1;
   min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 10px 14px 12px;
   background: var(--surface-float);
   color: var(--on-surface);
   font-size: 12px;
   line-height: 1.75;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 #markdownPreview h1,
@@ -600,7 +606,9 @@ body {
 
 #markdownPreview p { margin: 0.5em 0; }
 
-#markdownPreview a { color: var(--primary); }
+#markdownPreview a { color: var(--primary); word-break: break-all; }
+
+#markdownPreview img { max-width: 100%; height: auto; display: block; }
 
 #markdownPreview code {
   font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
