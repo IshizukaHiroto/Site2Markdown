@@ -27,6 +27,8 @@ const DEFAULT_SETTINGS = {
   filenameSeparator:       '_',
   filenameTitleMaxLength:  50,
   autoCopy:                false,
+  closeAfterCopy:          false,
+  preserveMath:            false,
 };
 
 // ── 文字列定数 ─────────────────────────────────────────────────────────────────
@@ -74,6 +76,8 @@ const FORM_FIELDS = [
   { id: 'filenameSeparator',      type: 'select'   },
   { id: 'filenameTitleMaxLength', type: 'number'   },
   { id: 'autoCopy',               type: 'checkbox' },
+  { id: 'closeAfterCopy',        type: 'checkbox' },
+  { id: 'preserveMath',          type: 'checkbox' },
 ];
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────

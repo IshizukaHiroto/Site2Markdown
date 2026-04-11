@@ -916,3 +916,20 @@ h1 {
     text-align: center;
   }
 }
+
+/* ── Dark mode ────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface:          #1e1c18;
+    --surface-low:      #181610;
+    --surface-raised:   #2e2c27;
+    --surface-float:    #252319;
+    --on-surface:       #e8e5dc;
+    --on-surface-mid:   rgba(232, 229, 220, 0.65);
+    --on-surface-light: rgba(232, 229, 220, 0.40);
+    --outline-ghost:    rgba(232, 229, 220, 0.13);
+    --shadow-color:     rgba(0, 0, 0, 0.3);
+    --paper:            var(--surface-float);
+  }
+}

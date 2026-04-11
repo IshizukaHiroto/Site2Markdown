@@ -27,6 +27,8 @@ const DEFAULT_SETTINGS = {
   filenameSeparator:       '_',
   filenameTitleMaxLength:  50,
   autoCopy:                false,
+  closeAfterCopy:          false,
+  preserveMath:            false,
 };
 
 // ── 文字列定数 ─────────────────────────────────────────────────────────────────
@@ -44,8 +46,10 @@ const T = {
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
-let currentTitle = 'untitled';
-let downloadUrl  = null;
+let currentTitle  = 'untitled';
+let downloadUrl   = null;
+let isPreviewMode = false;
+let isHistoryMode = false;
 
 // ── UI helpers ────────────────────────────────────────────────────────────────
 
@@ -119,6 +123,106 @@ function setPropertyValues(tab) {
   document.getElementById('prop-url-value').title         = tab.url || '';
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('prop-date-value').textContent  = today;
+}
+
+// ── Markdown プレビュー ────────────────────────────────────────────────────────
+
+/**
+ * DOMPurify でサニタイズ済みの HTML を DOMParser 経由で安全に挿入する
+ */
+function setPreviewNodes(el, markdownText) {
+  const sanitizedHtml = DOMPurify.sanitize(marked.parse(markdownText));
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(sanitizedHtml, 'text/html');
+  el.replaceChildren(...Array.from(doc.body.childNodes));
+}
+
+function togglePreview() {
+  isPreviewMode = !isPreviewMode;
+  const textarea = document.getElementById('markdownOutput');
+  const preview  = document.getElementById('markdownPreview');
+  const btn      = document.getElementById('previewToggleBtn');
+
+  if (isPreviewMode) {
+    setPreviewNodes(preview, textarea.value);
+    textarea.hidden = true;
+    preview.hidden  = false;
+    btn.classList.add('is-active');
+  } else {
+    textarea.hidden = false;
+    preview.hidden  = true;
+    btn.classList.remove('is-active');
+  }
+}
+
+// ── 変換履歴 ──────────────────────────────────────────────────────────────────
+
+function saveHistory(title, url) {
+  chrome.storage.local.get({ conversionHistory: [] }, ({ conversionHistory }) => {
+    const entry = {
+      title: title || T.untitled,
+      url,
+      domain: (() => { try { return new URL(url).hostname; } catch { return ''; } })(),
+      date: new Date().toISOString().split('T')[0],
+    };
+    chrome.storage.local.set({
+      conversionHistory: [entry, ...conversionHistory].slice(0, 50),
+    });
+  });
+}
+
+function renderHistory() {
+  chrome.storage.local.get({ conversionHistory: [] }, ({ conversionHistory }) => {
+    const list = document.getElementById('history-list');
+    list.textContent = '';
+
+    if (!conversionHistory.length) {
+      const p = document.createElement('p');
+      p.className = 'history-empty';
+      p.textContent = 'まだ履歴がありません';
+      list.appendChild(p);
+      return;
+    }
+
+    conversionHistory.forEach((item) => {
+      const el = document.createElement('div');
+      el.className = 'history-item';
+
+      const titleEl = document.createElement('div');
+      titleEl.className = 'history-title';
+      titleEl.textContent = item.title;
+
+      const metaEl = document.createElement('div');
+      metaEl.className = 'history-meta';
+      metaEl.textContent = `${item.domain} · ${item.date}`;
+
+      el.appendChild(titleEl);
+      el.appendChild(metaEl);
+      el.addEventListener('click', () => chrome.tabs.create({ url: item.url }));
+      list.appendChild(el);
+    });
+  });
+}
+
+function toggleHistory() {
+  isHistoryMode = !isHistoryMode;
+  const contentSection = document.getElementById('content-section');
+  const historyPanel   = document.getElementById('history-panel');
+  const historyBtn     = document.getElementById('historyBtn');
+  const actionBar      = document.getElementById('action-bar');
+
+  if (isHistoryMode) {
+    contentSection.hidden = true;
+    historyPanel.hidden   = false;
+    historyBtn.classList.add('is-active');
+    actionBar.hidden = true;
+    renderHistory();
+  } else {
+    contentSection.hidden = false;
+    historyPanel.hidden   = true;
+    historyBtn.classList.remove('is-active');
+    actionBar.hidden = false;
+  }
 }
 
 // ── Conversion ────────────────────────────────────────────────────────────────
@@ -224,6 +328,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateCharCount(markdown);
   setButtonsEnabled(true);
 
+  // プレビューボタンを有効化
+  document.getElementById('previewToggleBtn').hidden = false;
+
+  // 履歴に保存
+  saveHistory(currentTitle, tab.url);
+
   // 自動コピー
   if (settings.autoCopy) {
     try {
@@ -238,6 +348,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       await navigator.clipboard.writeText(text);
       showStatus(T.copied);
+      if (settings.closeAfterCopy) setTimeout(() => window.close(), 600);
     } catch {
       showStatus(T.copyFailed, true);
     }
@@ -246,6 +357,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 文字数カウント更新（編集時）
   document.getElementById('markdownOutput').addEventListener('input', (e) => {
     updateCharCount(e.target.value);
+    // プレビューモード中は内容を同期
+    if (isPreviewMode) {
+      const preview = document.getElementById('markdownPreview');
+      setPreviewNodes(preview, e.target.value);
+    }
   });
 
   // 保存
@@ -304,4 +420,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 document.getElementById('optionsBtn').addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
+});
+
+document.getElementById('previewToggleBtn').addEventListener('click', togglePreview);
+
+document.getElementById('historyBtn').addEventListener('click', toggleHistory);
+
+document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+  chrome.storage.local.set({ conversionHistory: [] }, renderHistory);
 });

@@ -34,7 +34,58 @@ const DEFAULT_SETTINGS = {
   filenameSeparator:       '_',
   filenameTitleMaxLength:  50,
   autoCopy:                false,
+  closeAfterCopy:          false,
+  preserveMath:            false,
 };
+
+/**
+ * 数式要素を $…$ / $$…$$ プレースホルダに変換する（KaTeX / MathJax / Wikipedia対応）
+ */
+function preprocessMath(doc) {
+  // KaTeX: <span class="katex"> 内の <annotation encoding="application/x-tex">
+  doc.querySelectorAll('.katex').forEach((el) => {
+    const ann = el.querySelector('annotation[encoding="application/x-tex"]');
+    if (!ann) return;
+    const isDisplay = !!el.closest('.katex-display');
+    const span = doc.createElement('span');
+    span.textContent = isDisplay
+      ? `$$${ann.textContent.trim()}$$`
+      : `$${ann.textContent.trim()}$`;
+    el.replaceWith(span);
+  });
+
+  // MathJax v2: <script type="math/tex">
+  doc.querySelectorAll('script[type^="math/tex"]').forEach((el) => {
+    const isDisplay = el.getAttribute('type').includes('display');
+    const span = doc.createElement('span');
+    span.textContent = isDisplay
+      ? `$$${el.textContent.trim()}$$`
+      : `$${el.textContent.trim()}$`;
+    el.replaceWith(span);
+  });
+
+  // MathJax v3: <mjx-container>
+  doc.querySelectorAll('mjx-container').forEach((el) => {
+    const isDisplay = el.getAttribute('display') === 'true';
+    const script = el.querySelector('script[type]');
+    if (!script?.textContent.trim()) return;
+    const span = doc.createElement('span');
+    span.textContent = isDisplay
+      ? `$$${script.textContent.trim()}$$`
+      : `$${script.textContent.trim()}$`;
+    el.replaceWith(span);
+  });
+
+  // Wikipedia 等: <math alttext="...">
+  doc.querySelectorAll('math[alttext]').forEach((el) => {
+    const isDisplay = el.getAttribute('display') === 'block';
+    const span = doc.createElement('span');
+    span.textContent = isDisplay
+      ? `$$${el.getAttribute('alttext')}$$`
+      : `$${el.getAttribute('alttext')}$`;
+    el.replaceWith(span);
+  });
+}
 
 /**
  * 設定に応じて不要な要素をDOMクローンから除去する
@@ -187,7 +238,32 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     // 通常抽出（selectionOnly 未適用の場合）
     if (contentHtml === null) {
       const documentClone = document.cloneNode(true);
-      // script・noscript・iframe・style は設定に関係なく常に除去
+
+      // 数式を先に変換（設定ONの場合）
+      if (settings.preserveMath) preprocessMath(documentClone);
+
+      // iframe を URL リンクに変換してから除去
+      documentClone.querySelectorAll('iframe[src]').forEach((el) => {
+        const src = el.getAttribute('src') || '';
+        let link = null;
+        const yt = src.match(/youtube(?:-nocookie)?\.com\/embed\/([^?&]+)/);
+        if (yt) {
+          link = `https://www.youtube.com/watch?v=${yt[1]}`;
+        } else if (src.includes('player.vimeo.com/video/')) {
+          const vm = src.match(/vimeo\.com\/video\/(\d+)/);
+          link = vm ? `https://vimeo.com/${vm[1]}` : src;
+        } else if (src.startsWith('http')) {
+          link = src;
+        }
+        if (link) {
+          const a = documentClone.createElement('a');
+          a.href = link;
+          a.textContent = link;
+          el.replaceWith(a);
+        }
+      });
+
+      // script・noscript・iframe（残り）・style は常に除去
       documentClone.querySelectorAll('script, noscript, iframe, style').forEach((el) => el.remove());
       removeUnwantedElements(documentClone, settings);
 
@@ -215,6 +291,19 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     turndownService.use(turndownPluginGfm.gfm);
 
     // ── カスタムルール（GFM適用後に追加して優先） ──────────────
+
+    // コードブロックの言語タグ自動検出（language-xxx / lang-xxx クラスから取得）
+    turndownService.addRule('fencedCodeBlockWithLang', {
+      filter: (node) =>
+        node.nodeName === 'PRE' && node.firstElementChild?.nodeName === 'CODE',
+      replacement: (_content, node) => {
+        const code = node.firstElementChild;
+        const cls  = code.getAttribute('class') || '';
+        const lang = (cls.match(/(?:language|lang)-(\S+)/) || [])[1] || '';
+        const text = code.textContent.replace(/\n$/, '');
+        return `\n\n\`\`\`${lang}\n${text}\n\`\`\`\n\n`;
+      },
+    });
 
     // 画像の扱い
     if (settings.imageHandling === 'altOnly') {
