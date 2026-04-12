@@ -1,30 +1,30 @@
 /* ── Design tokens ── */
 :root {
-  /* Surface hierarchy (warm parchment base) */
-  --surface:        #fbf9f4;
-  --surface-low:    #f5f3ee;
-  --surface-raised: #e4e2dd;
+  /* Surface hierarchy (GitHub Light) */
+  --surface:        #f6f8fa;
+  --surface-low:    #eaeef2;
+  --surface-raised: #d0d7de;
   --surface-float:  #ffffff;
 
-  /* Text (never pure black) */
-  --on-surface:       #1b1c19;
-  --on-surface-mid:   oklch(42% 0.008 260);
-  --on-surface-light: oklch(60% 0.006 260);
+  /* Text */
+  --on-surface:       #1f2328;
+  --on-surface-mid:   #636c76;
+  --on-surface-light: #6e7781;
 
-  /* Primary: purple */
-  --primary:           #974ef3;
-  --primary-container: #d0bcff;
-  --primary-dim:       rgba(151, 78, 243, 0.09);
+  /* Primary: GitHub blue */
+  --primary:           #0969da;
+  --primary-container: #dbeafe;
+  --primary-dim:       rgba(9, 105, 218, 0.08);
   --on-primary:        #ffffff;
 
-  /* Ghost border (felt, not seen) */
-  --outline-ghost: rgba(27, 28, 25, 0.14);
+  /* Ghost border */
+  --outline-ghost: rgba(31, 35, 40, 0.15);
 
   /* Status */
-  --green:     oklch(40% 0.12 148);
+  --green: #1a7f37;
 
   /* Ambient shadow base */
-  --shadow-color: rgba(27, 28, 25, 0.05);
+  --shadow-color: rgba(31, 35, 40, 0.06);
 
   /* Paper — used for SVG knockout fills */
   --paper: var(--surface-float);
@@ -543,7 +543,7 @@ body {
   position: absolute;
   bottom: calc(100% + 6px);
   right: 0;
-  background: rgba(251, 249, 244, 0.88);
+  background: color-mix(in srgb, var(--surface-float) 92%, transparent);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--outline-ghost);
@@ -748,15 +748,19 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --surface:          #1e1c18;
-    --surface-low:      #181610;
-    --surface-raised:   #2e2c27;
-    --surface-float:    #252319;
-    --on-surface:       #e8e5dc;
-    --on-surface-mid:   rgba(232, 229, 220, 0.65);
-    --on-surface-light: rgba(232, 229, 220, 0.40);
-    --outline-ghost:    rgba(232, 229, 220, 0.13);
-    --shadow-color:     rgba(0, 0, 0, 0.3);
-    --paper:            var(--surface-float);
+    --surface:           #161b22;
+    --surface-low:       #0d1117;
+    --surface-raised:    #30363d;
+    --surface-float:     #21262d;
+    --on-surface:        #e6edf3;
+    --on-surface-mid:    rgba(230, 237, 243, 0.62);
+    --on-surface-light:  rgba(230, 237, 243, 0.38);
+    --primary:           #2f81f7;
+    --primary-container: rgba(47, 129, 247, 0.15);
+    --primary-dim:       rgba(47, 129, 247, 0.10);
+    --outline-ghost:     rgba(240, 246, 252, 0.10);
+    --green:             #3fb950;
+    --shadow-color:      rgba(0, 0, 0, 0.3);
+    --paper:             var(--surface-float);
   }
 }

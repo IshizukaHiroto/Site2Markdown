@@ -1,33 +1,33 @@
 /* ── Design tokens ── */
 :root {
-  /* Surface hierarchy (warm parchment base) */
-  --surface:        #fbf9f4;
-  --surface-low:    #f5f3ee;
-  --surface-raised: #e4e2dd;
+  /* Surface hierarchy (GitHub Light) */
+  --surface:        #f6f8fa;
+  --surface-low:    #eaeef2;
+  --surface-raised: #d0d7de;
   --surface-float:  #ffffff;
 
-  /* Text (never pure black) */
-  --on-surface:       #1b1c19;
-  --on-surface-mid:   oklch(42% 0.008 260);
-  --on-surface-light: oklch(60% 0.006 260);
+  /* Text */
+  --on-surface:       #1f2328;
+  --on-surface-mid:   #636c76;
+  --on-surface-light: #6e7781;
 
-  /* Primary: purple */
-  --primary:           #974ef3;
-  --primary-container: #d0bcff;
-  --primary-dim:       rgba(151, 78, 243, 0.09);
+  /* Primary: GitHub blue */
+  --primary:           #0969da;
+  --primary-container: #dbeafe;
+  --primary-dim:       rgba(9, 105, 218, 0.08);
   --on-primary:        #ffffff;
 
   /* Ghost border */
-  --outline-ghost: rgba(27, 28, 25, 0.14);
+  --outline-ghost: rgba(31, 35, 40, 0.15);
 
   /* Status */
-  --success-text: oklch(32% 0.10 148);
-  --success-bg:   oklch(95% 0.04 148);
-  --success-rule: oklch(82% 0.08 148);
+  --success-text: #1a7f37;
+  --success-bg:   #dafbe1;
+  --success-rule: rgba(26, 127, 55, 0.30);
 
-  --warning-text: #974ef3;
-  --warning-bg:   rgba(151, 78, 243, 0.07);
-  --warning-rule: rgba(151, 78, 243, 0.25);
+  --warning-text: #0969da;
+  --warning-bg:   rgba(9, 105, 218, 0.07);
+  --warning-rule: rgba(9, 105, 218, 0.25);
 }
 
 * {
@@ -921,15 +921,23 @@ h1 {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --surface:          #1e1c18;
-    --surface-low:      #181610;
-    --surface-raised:   #2e2c27;
-    --surface-float:    #252319;
-    --on-surface:       #e8e5dc;
-    --on-surface-mid:   rgba(232, 229, 220, 0.65);
-    --on-surface-light: rgba(232, 229, 220, 0.40);
-    --outline-ghost:    rgba(232, 229, 220, 0.13);
-    --shadow-color:     rgba(0, 0, 0, 0.3);
-    --paper:            var(--surface-float);
+    --surface:           #161b22;
+    --surface-low:       #0d1117;
+    --surface-raised:    #30363d;
+    --surface-float:     #21262d;
+    --on-surface:        #e6edf3;
+    --on-surface-mid:    rgba(230, 237, 243, 0.62);
+    --on-surface-light:  rgba(230, 237, 243, 0.38);
+    --primary:           #2f81f7;
+    --primary-container: rgba(47, 129, 247, 0.15);
+    --primary-dim:       rgba(47, 129, 247, 0.10);
+    --outline-ghost:     rgba(240, 246, 252, 0.10);
+    --shadow-color:      rgba(0, 0, 0, 0.3);
+    --success-text:      #3fb950;
+    --success-bg:        rgba(63, 185, 80, 0.10);
+    --success-rule:      rgba(63, 185, 80, 0.25);
+    --warning-text:      #2f81f7;
+    --warning-bg:        rgba(47, 129, 247, 0.07);
+    --warning-rule:      rgba(47, 129, 247, 0.25);
   }
 }
