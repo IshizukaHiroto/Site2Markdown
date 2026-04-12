@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Site2Markdown",
   "version": "1.0.1",
-  "description": "Convert any webpage to Markdown for AI input or personal notes",
+  "description": "WebページをMarkdownに変換するChrome拡張機能",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

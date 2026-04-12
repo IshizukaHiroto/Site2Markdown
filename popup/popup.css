@@ -398,40 +398,6 @@ body {
   font-style: italic;
 }
 
-/* ── Upgrade bar ──────────────────────────── */
-
-#upgrade-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 6px 14px;
-  background: color-mix(in srgb, var(--primary) 7%, var(--surface));
-}
-
-.upgrade-text {
-  font-size: 11px;
-  color: var(--primary);
-  font-weight: 500;
-}
-
-.btn-upgrade {
-  padding: 4px 10px;
-  border: none;
-  border-radius: 4px;
-  background: var(--primary);
-  color: var(--on-primary);
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: opacity 0.12s ease;
-}
-
-.btn-upgrade:hover { opacity: 0.85; }
-
 /* ── Action bar ───────────────────────────── */
 
 #action-bar {
